@@ -26,8 +26,13 @@ SECRET_KEY = "django-insecure-uso(rhk(nt4_#-72!aa^51r_)koidf2aqaig&rc4cnj17mx6=b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+# Lista de domínios confiáveis
+CSRF_TRUSTED_ORIGINS = [
+'https://localhost:8000',
+'http://localhost:8000',
+]
 
 # Application definition
 
