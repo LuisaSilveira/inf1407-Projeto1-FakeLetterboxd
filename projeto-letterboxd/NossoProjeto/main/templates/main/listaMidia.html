@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Mídias</title>
+</head>
+<body>
+    {% include 'main/links.html' %}
+    <h1>Lista de Mídias</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Ano</th>
+                <th>Diretor</th>
+                <th>Gênero</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for midia in midias %}
+            <tr>
+                <td>{{ midia.titulo }}</td>
+                <td>{{ midia.get_tipo_display }}</td>
+                <td>{{ midia.ano_lancamento }}</td>
+                <td>{{ midia.diretor }}</td>
+                <td>{{ midia.get_generos_display }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Ainda não tem mídias cadastradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+    <link rel="stylesheet"
+            href="{% static 'main/css/estilo.css' %}">
+
+</head>
+<body>
+    {% include 'main/links.html' %}
+    <h1>{{ titulo }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <button type="submit">{{ botao }}</button>
+    </form>
+</body>
+</html>
