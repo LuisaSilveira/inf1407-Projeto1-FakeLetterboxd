@@ -13,8 +13,8 @@
 
         <nav id="links">
             <ul>
-                <li><a href="{% url 'portal:home' %}">Login</a></li>
-                <li><a href="{% url 'portal:home' %}">Cadastro</a></li>
+                <li><a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}">Login</a></li> <!-- redireciona para a página de avaliação da main-->
+                <li><a href="{% url 'accounts:cadastro' %}">Cadastro</a></li>
             </ul>
         </nav>
     </header>
