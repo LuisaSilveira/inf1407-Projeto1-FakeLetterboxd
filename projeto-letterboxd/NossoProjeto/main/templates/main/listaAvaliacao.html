@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Avaliações</title>
+    <link rel="stylesheet" href="{% static 'main/css/estilo.css' %}">
+</head>
+<body>
+    {% include 'main/links.html' %}
+    <h1>Lista de Avaliações</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Pessoa</th>
+                <th>Mídia</th>
+                <th>Nota</th>
+                <th>Comentário</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avaliacao in avaliacoes %}
+            <tr>
+                <td>{{ avaliacao.pessoa }}</td>
+                <td>{{ avaliacao.midia }}</td>
+                <td>{{ avaliacao.nota }}</td>
+                <td>{{ avaliacao.comentario }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Ainda não tem avaliações cadastradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
