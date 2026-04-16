@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Apaga Avaliação</title>
+</head>
+<body>
+    {% include 'main/links.html' %}
+    <h1>Remoção de avaliações</h1>
+    <form method="POST">
+        {% csrf_token %}
+        Confirma a remoção de {{ avaliacao }}?<br>
+        <button>
+            <a href="{% url 'main:lista-avaliacao' %}"
+            style="text-decoration: none; color: black;">Cancela</a>
+        </button>
+        <input type="submit" value="Remove">
+    </form>
+</body>
+</html>

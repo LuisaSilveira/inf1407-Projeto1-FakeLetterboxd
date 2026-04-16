@@ -3,8 +3,10 @@ from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from django.views.generic.base import View
 
-from main.forms import AvaliacaoModel2Form, MidiaModel2Form
+from main.forms import AvaliacaoModel2Form, PessoaModel2Form
 from main.models import Midia, Avaliacao, Pessoa
+
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 
@@ -38,6 +40,29 @@ class MidiaListView(View):
         )
 
 
+class PessoaCreateView(View):
+    def get(self, request, *args, **kwargs):
+        contexto = {
+            'formulario': PessoaModel2Form(),
+            'titulo': 'Cadastrar pessoa',
+            'botao': 'Salvar pessoa',
+        }
+        return render(request, 'main/formulario.html', contexto)
+
+    def post(self, request, *args, **kwargs):
+        formulario = PessoaModel2Form(request.POST, request.FILES)
+        if formulario.is_valid():
+            formulario.save()
+            return HttpResponseRedirect(reverse_lazy('portal:home'))
+
+        contexto = {
+            'formulario': formulario,
+            'titulo': 'Cadastrar pessoa',
+            'botao': 'Salvar pessoa',
+        }
+        return render(request, 'main/formulario.html', contexto)
+
+
 class AvaliacaoCreateView(View):
     def get(self, request, *args, **kwargs):
         contexto = {
@@ -60,25 +85,30 @@ class AvaliacaoCreateView(View):
         }
         return render(request, 'main/formulario.html', contexto)
 
+class AvaliacaoUpdateView(View):
+    def get(self, request, pk, *args, **kwargs):
+        avaliacao = Avaliacao.objects.get(pk=pk)
+        formulario = AvaliacaoModel2Form(instance=avaliacao)
+        contexto = {'avaliacao': formulario, }
+        return render(request, 'main/atualizaAvaliacao.html', contexto)
 
-class MidiaCreateView(View):
-    def get(self, request, *args, **kwargs):
-        contexto = {
-            'formulario': MidiaModel2Form(),
-            'titulo': 'Cadastrar mídia',
-            'botao': 'Salvar mídia',
-        }
-        return render(request, 'main/formulario.html', contexto)
-
-    def post(self, request, *args, **kwargs):
-        formulario = MidiaModel2Form(request.POST, request.FILES)
+    def post(self, request, pk, *args, **kwargs):
+        avaliacao = get_object_or_404(Avaliacao, pk=pk)
+        formulario = AvaliacaoModel2Form(request.POST, instance=avaliacao)
         if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect(reverse_lazy('main:lista-midia'))
+            avaliacao = formulario.save() # cria uma avaliacao com os dados do formulário
+            avaliacao.save() # salva uma avaliacao no banco de dados
+            return HttpResponseRedirect(reverse_lazy("main:lista-avaliacao"))
+        else:
+            contexto = {'avaliacao': formulario, }
+            return render(request, 'main/atualizaAvaliacao.html', contexto)
 
-        contexto = {
-            'formulario': formulario,
-            'titulo': 'Cadastrar mídia',
-            'botao': 'Salvar mídia',
-        }
-        return render(request, 'main/formulario.html', contexto)
+class AvaliacaoDeleteView(View):
+    def get(self, request, pk, *args, **kwargs):
+        avaliacao = Avaliacao.objects.get(pk=pk)
+        contexto = { 'avaliacao': avaliacao, }
+        return render(request, 'main/apagaAvaliacao.html', contexto)
+    def post(self, request, pk, *args, **kwargs):
+        avaliacao = Avaliacao.objects.get(pk=pk)
+        avaliacao.delete()
+        return HttpResponseRedirect(reverse_lazy("main:lista-avaliacao"))
