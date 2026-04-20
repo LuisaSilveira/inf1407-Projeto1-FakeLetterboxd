@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +8,157 @@
     <link rel="stylesheet" href="{% static 'main/css/formsAvaliacao.css' %}">
 </head>
 <body>
-    {% include 'main/links.html' %}
-    <h1>Atualização de avaliações</h1>
-        <form method="POST" class='formulario'>
-        <fieldset>
-            <legend>Formulário de Avaliação</legend>
+    <div class="container">
+        {% include 'main/links.html' %}
+
+        {% for message in messages %}
+            <div class="mensagens {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h1>Atualização de avaliação</h1>
+
+        {% if trocar_midia %}
+        <div class="secao">
+            <h2>Trocar Filme ou Série</h2>
+            <form method="get" class="busca-form">
+                <input type="hidden" name="trocar_midia" value="1">
+                <input
+                    type="text"
+                    name="busca_midia"
+                    class="busca-input"
+                    placeholder="Digite o título..."
+                    value="{{ termo_busca }}"
+                    required
+                    autofocus
+                >
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+
+            {% for midia in midias_encontradas %}
+                <div class="resultado-item">
+                    {% if midia.poster_url and midia.poster_url != 'N/A' %}
+                        <img src="{{ midia.poster_url }}" alt="{{ midia.titulo }}" class="poster">
+                    {% else %}
+                        <div class="poster"></div>
+                    {% endif %}
+
+                    <div class="info-midia">
+                        <div class="titulo-midia">{{ midia.titulo }}</div>
+                        <div class="detalhes-midia">
+                            {{ midia.tipo|title }} • {{ midia.ano_lancamento }}{% if midia.diretor %} • {{ midia.diretor }}{% endif %}
+                        </div>
+                        {% if midia.sinopse %}
+                            <div class="sinopse">{{ midia.sinopse }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="actions">
+                        <a href="{% url 'main:atualiza-avaliacao' avaliacao_obj.id %}?midia_selecionada={{ midia.imdb_id }}" class="btn btn-primary">
+                            Selecionar
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                {% if termo_busca %}
+                    <div class="nenhum-resultado">
+                        <p>Nenhum resultado para "{{ termo_busca }}"</p>
+                        <p>Tente outro termo de busca</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="secao">
+            <h2><span class="check-icon">✓</span> Mídia Selecionada</h2>
+            <div class="resultado-item midia-selecionada">
+                {% if midia_selecionada.poster_url %}
+                    <img src="{{ midia_selecionada.poster_url }}" alt="{{ midia_selecionada.titulo }}" class="poster">
+                {% else %}
+                    <div class="poster"></div>
+                {% endif %}
+
+                <div class="info-midia">
+                    <div class="titulo-midia">{{ midia_selecionada.titulo }}</div>
+                    <div class="detalhes-midia">
+                        {{ midia_selecionada.get_tipo_display }} • {{ midia_selecionada.ano_lancamento }}{% if midia_selecionada.diretor %} • {{ midia_selecionada.diretor }}{% endif %}
+                    </div>
+                    {% if midia_selecionada.sinopse %}
+                        <div class="sinopse">{{ midia_selecionada.sinopse }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="actions">
+                    {% if trocar_midia %}
+                        <a href="{% url 'main:atualiza-avaliacao' avaliacao_obj.id %}" class="btn btn-danger">
+                            Cancelar
+                        </a>
+                    {% else %}
+                        <a href="{% url 'main:atualiza-avaliacao' avaliacao_obj.id %}?trocar_midia=1" class="btn btn-danger">
+                            Trocar
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="secao">
+            <h2>Formulário de Avaliação</h2>
+            <form method="POST" class="form-avaliacao form-avaliacao-condensado">
             {% csrf_token %}
-            <table class='formulario'>
-                {{ avaliacao.as_table }}
-            </table>
-            <button type="submit">Atualizar Avaliação</button>
-        </fieldset>
-    </form>
+            <input type="hidden" name="midia_id" value="{{ midia_selecionada.id }}">
+
+            {% if avaliacao.non_field_errors %}
+                <ul class="errorlist">
+                    {% for erro in avaliacao.non_field_errors %}
+                        <li>{{ erro }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="campo">
+                {{ avaliacao.pessoa.label_tag }}
+                {{ avaliacao.pessoa }}
+                {{ avaliacao.pessoa.errors }}
+                {% if avaliacao.pessoa.help_text %}
+                    <small class="helptext">{{ avaliacao.pessoa.help_text }}</small>
+                {% endif %}
+            </div>
+
+            <div class="linha-dupla">
+                <div class="campo">
+                    {{ avaliacao.nota.label_tag }}
+                    {{ avaliacao.nota }}
+                    {{ avaliacao.nota.errors }}
+                    {% if avaliacao.nota.help_text %}
+                        <small class="helptext">{{ avaliacao.nota.help_text }}</small>
+                    {% endif %}
+                </div>
+
+                <div class="campo">
+                    {{ avaliacao.assistido_em.label_tag }}
+                    {{ avaliacao.assistido_em }}
+                    {{ avaliacao.assistido_em.errors }}
+                    {% if avaliacao.assistido_em.help_text %}
+                        <small class="helptext">{{ avaliacao.assistido_em.help_text }}</small>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="campo">
+                {{ avaliacao.comentario.label_tag }}
+                {{ avaliacao.comentario }}
+                {{ avaliacao.comentario.errors }}
+                {% if avaliacao.comentario.help_text %}
+                    <small class="helptext">{{ avaliacao.comentario.help_text }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Atualizar Avaliação</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -64,17 +64,64 @@ class PessoaCreateView(View):
 
 class AvaliacaoCreateView(View):
     def get(self, request):
+        termo_busca = request.GET.get('busca_midia', '')
+        midias_encontradas = []
+        midia_selecionada_id = request.GET.get('midia_selecionada')
+        midia_selecionada = None
+        
+        # Se tem termo de busca, busca na API
+        if termo_busca:
+            midias_encontradas = OMDBService.buscar_multiplos(termo_busca)
+        
+        # Se tem mídia selecionada, busca/cria no banco
+        if midia_selecionada_id:
+            midia_selecionada = Midia.objects.filter(imdb_id=midia_selecionada_id).first()
+            
+            if not midia_selecionada:
+                # Busca na API e cria
+                dados = OMDBService.buscar_por_imdb_id(midia_selecionada_id)
+                if dados:
+                    midia_selecionada = Midia.objects.create(
+                        titulo=dados['titulo'],
+                        tipo=dados['tipo'],
+                        sinopse=dados['sinopse'],
+                        ano_lancamento=dados['ano_lancamento'],
+                        diretor=dados['diretor'],
+                        generos=dados['generos'],
+                        imdb_id=dados['imdb_id'],
+                        poster_url=dados['poster_url'],
+                    )
+
+            # Ao selecionar uma mídia, retorna para a visualização principal
+            # (card de mídia selecionada + botão de trocar), sem barra de busca.
+            trocar_midia = False
+        
         contexto = {
             'formulario': AvaliacaoModel2Form(),
+            'termo_busca': termo_busca,
+            'midias_encontradas': midias_encontradas,
+            'midia_selecionada': midia_selecionada,
         }
         return render(request, 'main/criaAvaliacao.html', contexto)
 
     def post(self, request):
         formulario = AvaliacaoModel2Form(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect(reverse_lazy('main:lista-avaliacao'))
-
+        midia_id = request.POST.get('midia_id')
+        
+        if formulario.is_valid() and midia_id:
+            try:
+                midia = Midia.objects.get(id=midia_id)
+                avaliacao = formulario.save(commit=False)
+                avaliacao.midia = midia
+                avaliacao.save()
+                messages.success(request, f'Avaliação de "{midia.titulo}" criada com sucesso!')
+                return HttpResponseRedirect(reverse_lazy('main:lista-avaliacao'))
+            except Midia.DoesNotExist:
+                messages.error(request, 'Mídia não encontrada')
+        else:
+            if not midia_id:
+                messages.error(request, 'Por favor, selecione uma mídia')
+        
         contexto = {
             'formulario': formulario,
         }
@@ -82,20 +129,80 @@ class AvaliacaoCreateView(View):
 
 class AvaliacaoUpdateView(View):
     def get(self, request, pk, *args, **kwargs):
-        avaliacao = Avaliacao.objects.get(pk=pk)
+        avaliacao = get_object_or_404(Avaliacao, pk=pk)
         formulario = AvaliacaoModel2Form(instance=avaliacao)
-        contexto = {'avaliacao': formulario, }
+
+        termo_busca = request.GET.get('busca_midia', '')
+        trocar_midia = request.GET.get('trocar_midia') == '1'
+        midias_encontradas = []
+        midia_selecionada = avaliacao.midia
+        midia_selecionada_id = request.GET.get('midia_selecionada')
+
+        if termo_busca:
+            midias_encontradas = OMDBService.buscar_multiplos(termo_busca)
+
+        if midia_selecionada_id:
+            midia_selecionada = Midia.objects.filter(imdb_id=midia_selecionada_id).first()
+
+            if not midia_selecionada:
+                dados = OMDBService.buscar_por_imdb_id(midia_selecionada_id)
+                if dados:
+                    midia_selecionada = Midia.objects.create(
+                        titulo=dados['titulo'],
+                        tipo=dados['tipo'],
+                        sinopse=dados['sinopse'],
+                        ano_lancamento=dados['ano_lancamento'],
+                        diretor=dados['diretor'],
+                        generos=dados['generos'],
+                        imdb_id=dados['imdb_id'],
+                        poster_url=dados['poster_url'],
+                    )
+
+        contexto = {
+            'avaliacao': formulario,
+            'avaliacao_obj': avaliacao,
+            'termo_busca': termo_busca,
+            'trocar_midia': trocar_midia,
+            'midias_encontradas': midias_encontradas,
+            'midia_selecionada': midia_selecionada,
+        }
         return render(request, 'main/atualizaAvaliacao.html', contexto)
 
     def post(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
         formulario = AvaliacaoModel2Form(request.POST, instance=avaliacao)
+        midia_id = request.POST.get('midia_id')
+
         if formulario.is_valid():
-            avaliacao = formulario.save() # cria uma avaliacao com os dados do formulário
-            avaliacao.save() # salva uma avaliacao no banco de dados
+            avaliacao_editada = formulario.save(commit=False)
+
+            if midia_id:
+                try:
+                    avaliacao_editada.midia = Midia.objects.get(id=midia_id)
+                except Midia.DoesNotExist:
+                    messages.error(request, 'Mídia selecionada não encontrada')
+                    contexto = {
+                        'avaliacao': formulario,
+                        'avaliacao_obj': avaliacao,
+                        'midia_selecionada': avaliacao.midia,
+                        'termo_busca': '',
+                        'trocar_midia': False,
+                        'midias_encontradas': [],
+                    }
+                    return render(request, 'main/atualizaAvaliacao.html', contexto)
+
+            avaliacao_editada.save()
+            messages.success(request, 'Avaliação atualizada com sucesso!')
             return HttpResponseRedirect(reverse_lazy("main:lista-avaliacao"))
         else:
-            contexto = {'avaliacao': formulario, }
+            contexto = {
+                'avaliacao': formulario,
+                'avaliacao_obj': avaliacao,
+                'midia_selecionada': avaliacao.midia,
+                'termo_busca': '',
+                'trocar_midia': False,
+                'midias_encontradas': [],
+            }
             return render(request, 'main/atualizaAvaliacao.html', contexto)
 
 class AvaliacaoDeleteView(View):
