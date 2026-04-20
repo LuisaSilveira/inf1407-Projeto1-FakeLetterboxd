@@ -7,10 +7,15 @@
 </head>
 <body>
     {% include 'main/links.html' %}
+    
     <h1>Lista de Mídias</h1>
+    
+    <p><a href="{% url 'main:busca-midia' %}">Buscar e Importar Novas Mídias</a></p>
+    
     <table>
         <thead>
             <tr>
+                <th>Poster</th>
                 <th>Título</th>
                 <th>Tipo</th>
                 <th>Ano</th>
@@ -21,6 +26,11 @@
         <tbody>
             {% for midia in midias %}
             <tr>
+                <td>
+                    {% if midia.poster_url %}
+                        <img src="{{ midia.poster_url }}" alt="{{ midia.titulo }}" width="50">
+                    {% endif %}
+                </td>
                 <td>{{ midia.titulo }}</td>
                 <td>{{ midia.get_tipo_display }}</td>
                 <td>{{ midia.ano_lancamento }}</td>
@@ -29,7 +39,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">Ainda não tem mídias cadastradas</td>
+                <td colspan="6">Ainda não tem mídias cadastradas</td>
             </tr>
             {% endfor %}
         </tbody>
