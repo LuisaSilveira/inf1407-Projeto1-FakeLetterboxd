@@ -5,18 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'portal/css/portal.css' %}">
-    <title>Document</title>
+    <title>FakeLetterboxd</title>
 </head>
 <body>
     <header class="header">
-        <h1 class="logo">Seja bem vindo!</h1>
-
-        <nav id="links">
-            <ul>
-                <li><a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}">Login</a></li> <!-- redireciona para a página de avaliação da main-->
-                <li><a href="{% url 'accounts:cadastro' %}">Cadastro</a></li>
+        <span class="logo">FakeLetterboxd</span>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}" class="btn-login">Entrar</a></li>
+                <li><a href="{% url 'accounts:cadastro' %}" class="btn-cadastro">Cadastrar</a></li>
             </ul>
         </nav>
     </header>
+
+    <main class="hero">
+        <h1 class="hero-title">Bem-vindo ao <span>FakeLetterboxd</span></h1>
+        <p class="hero-subtitle">Avalie filmes e séries, compartilhe sua opinião e descubra o que assistir a seguir.</p>
+        <div class="hero-actions">
+            <a href="{% url 'accounts:cadastro' %}" class="btn-primary">Criar conta</a>
+            <a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}" class="btn-secondary">Já tenho conta</a>
+        </div>
+    </main>
 </body>
 </html>
