@@ -5,35 +5,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Avaliações</title>
-    <link rel="stylesheet" href="{% static 'main/css/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/listaAvaliacao.css' %}"> 
 </head>
 <body>
     {% include 'main/links.html' %}
+    
     <h1>Lista de Avaliações</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Pessoa</th>
-                <th>Mídia</th>
-                <th>Nota</th>
-                <th>Comentário</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for avaliacao in avaliacoes %}
-            <tr>
-                <td>{{ avaliacao.pessoa }}</td>
-                <td>{{ avaliacao.midia }}</td>
-                <td>{{ avaliacao.nota }}</td>
-                <td>{{ avaliacao.comentario }}</td>
-                <td><a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}">Atualizar</a>|<a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}">Apagar</a></td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">Ainda não tem avaliações cadastradas</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    
+    <div class="avaliacoes-grid">
+        {% for avaliacao in avaliacoes %}
+        <article class="avaliacao-card">
+            <div class="card-header">
+                <span class="pessoa-nome">{{ avaliacao.pessoa }}</span>
+                <div class="nota-container">
+                    <span class="nota">{{ avaliacao.nota }}</span>
+                </div>
+            </div>
+            
+            <h2 class="midia-titulo">{{ avaliacao.midia }}</h2>
+            
+            <p class="comentario">{{ avaliacao.comentario|default:"Sem comentário" }}</p>
+            
+            <div class="card-actions">
+                <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-atualizar">Editar</a>
+                <a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}" class="btn btn-apagar">Excluir</a>
+            </div>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            <p>Ainda não há avaliações cadastradas</p>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

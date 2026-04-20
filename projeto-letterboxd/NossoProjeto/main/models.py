@@ -46,6 +46,9 @@ class Midia(models.Model):
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     generos = models.CharField(max_length=50, choices=GENERO_CHOICES)
 
+    imdb_id = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    poster_url = models.URLField(max_length=500, blank=True)
+    
     def __str__(self):
         return f'{self.titulo} ({self.ano_lancamento})'
 

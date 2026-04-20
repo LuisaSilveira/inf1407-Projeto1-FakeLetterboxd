@@ -1,0 +1,190 @@
+/* Reset e variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: #14181c;
+    color: #9ab;
+    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 2rem;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Container para os cards */
+.avaliacoes-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card de avaliação */
+.avaliacao-card {
+    background: #1f2832;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid #456;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.avaliacao-card:hover {
+    background: #2c3440;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Header do card */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #456;
+}
+
+.pessoa-nome {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.nota-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nota {
+    background: #00e054;
+    color: #14181c;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Título da mídia */
+.midia-titulo {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+/* Comentário */
+.comentario {
+    color: #9ab;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    min-height: 3rem;
+}
+
+/* Ações */
+.card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #456;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.btn-atualizar {
+    background: transparent;
+    color: #00e054;
+    border-color: #00e054;
+}
+
+.btn-atualizar:hover {
+    background: #00e054;
+    color: #14181c;
+}
+
+.btn-apagar {
+    background: transparent;
+    color: #ff8000;
+    border-color: #ff8000;
+}
+
+.btn-apagar:hover {
+    background: #ff8000;
+    color: #fff;
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #678;;
+    grid-column: 1 / -1;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) { 
+    .avaliacoes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    body {
+        padding: 1rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    tr {
+        grid-template-columns: 80px 1fr;
+        grid-template-areas: 
+            "poster header"
+            "content content"
+            "actions actions";
+        min-height: auto;
+    }
+    
+    tr td:nth-child(1) {
+        grid-row: 1 / 2;
+    }
+    
+    tr td:nth-child(4) {
+        grid-column: 1 / -1;
+    }
+    
+    tr td:nth-child(5) {
+        grid-column: 1 / -1;
+    }
+}

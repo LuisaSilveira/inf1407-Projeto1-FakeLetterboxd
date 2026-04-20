@@ -125,4 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+<<<<<<< HEAD
 AUTH_USER_MODEL = 'accounts.CustomUser'
+=======
+
+# Usa o modelo de usuário customizado da app accounts.
+AUTH_USER_MODEL = "accounts.CustomUser"
+>>>>>>> 9449eadced6adc2be0fca0aa139c9226290f8a77

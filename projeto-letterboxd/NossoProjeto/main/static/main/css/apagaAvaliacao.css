@@ -1,0 +1,166 @@
+/* Reset e variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #14181c;
+    color: #9ab;
+    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+/* Container do formulário */
+form {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Mensagem de confirmação */
+form::before {
+    content: '⚠️';
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+form {
+    color: #9ab;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* Destacar o nome da avaliação */
+form br {
+    display: block;
+    content: "";
+    margin: 1.5rem 0;
+}
+
+/* Container dos botões */
+form > button,
+form > input[type="submit"] {
+    margin-top: 2rem;
+}
+
+/* Botões */
+button,
+input[type="submit"] {
+    padding: 0.85rem 2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0.5rem;
+}
+
+/* Botão Cancelar */
+button {
+    background: transparent;
+    border-color: #678;
+    color: #678;
+}
+
+button:hover {
+    background: #2c3440;
+    border-color: #9ab;
+    color: #9ab;
+    transform: translateY(-2px);
+}
+
+button a {
+    text-decoration: none !important;
+    color: inherit !important;
+    display: block;
+}
+
+/* Botão Remover */
+input[type="submit"] {
+    background: #ff4444;
+    color: #fff;
+    border: none;
+    font-family: inherit;
+}
+
+input[type="submit"]:hover {
+    background: #ff5555;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+}
+
+input[type="submit"]:active,
+button:active {
+    transform: translateY(0);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        padding: 2rem 1.5rem;
+    }
+
+    form::before {
+        font-size: 2.5rem;
+    }
+
+    form {
+        font-size: 1rem;
+    }
+
+    button,
+    input[type="submit"] {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+        margin: 0.5rem 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 1.5rem 1rem;
+    }
+
+    button,
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}

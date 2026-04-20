@@ -1,23 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualiza Avaliação</title>
+    <title>Cria Avaliação</title>
     <link rel="stylesheet" href="{% static 'main/css/formsAvaliacao.css' %}">
 </head>
 <body>
     {% include 'main/links.html' %}
-    <h1>Atualização de avaliações</h1>
-        <form method="POST" class='formulario'>
+    <h1>Cria Avaliação</h1>
+    <form action="" method="POST">
         <fieldset>
             <legend>Formulário de Avaliação</legend>
             {% csrf_token %}
             <table class='formulario'>
-                {{ avaliacao.as_table }}
+                {{ formulario.as_table }}
             </table>
-            <button type="submit">Atualizar Avaliação</button>
+            <button type="submit">Criar Avaliação</button>
         </fieldset>
     </form>
 </body>

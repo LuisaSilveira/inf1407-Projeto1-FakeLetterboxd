@@ -1,0 +1,221 @@
+/* Reset e variáveis */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #14181c;
+    color: #9ab;
+    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+/* Formulário */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+fieldset {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100% !important;
+    max-width: 100%;
+}
+
+legend {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    padding: 0 1rem;
+    background: #14181c;
+    border-radius: 4px;
+}
+
+/* Tabela do formulário */
+.formulario {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1.25rem;
+}
+
+.formulario tr {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formulario th {
+    text-align: left;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0;
+}
+
+.formulario td {
+    padding: 0;
+}
+
+/* Labels */
+.formulario label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Inputs e Selects */
+.formulario input[type="text"],
+.formulario input[type="date"],
+.formulario input[type="number"],
+.formulario select,
+.formulario textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: #14181c;
+    border: 2px solid #456;
+    border-radius: 6px;
+    color: #9ab;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+    outline: none;
+    border-color: #00e054;
+    background: #2c3440;
+}
+
+.formulario select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ab' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.formulario textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Campo de nota especial */
+.formulario input[type="number"] {
+    max-width: 120px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    color: #00e054;
+}
+
+/* Helptext */
+.formulario .helptext {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    color: #678;
+    font-style: italic;
+}
+
+/* Mensagens de erro */
+.formulario ul.errorlist {
+    list-style: none;
+    color:#ff8000;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.formulario ul.errorlist li {
+    padding: 0.5rem;
+    background: rgba(255, 128, 0, 0.1);
+    border-radius: 4px;
+    border-left: 3px solid #ff8000;
+}
+
+/* Botão de submit */
+button[type="submit"] {
+    width: 100%;
+    padding: 0.9rem 2rem;
+    background: #00e054;
+    color: #14181c;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button[type="submit"]:hover {
+    background: #00ff5e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 224, 84, 0.3);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    fieldset {
+        padding: 1.5rem;
+    }
+
+    legend {
+        font-size: 1.1rem;
+    }
+
+    .formulario {
+        border-spacing: 0 1rem;
+    }
+
+    .formulario input[type="number"] {
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    fieldset {
+        padding: 1rem;
+    }
+
+    button[type="submit"] {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
