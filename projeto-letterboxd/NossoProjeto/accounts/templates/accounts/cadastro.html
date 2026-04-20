@@ -4,25 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <link rel="stylesheet" href="{% static 'accounts/css/forms.css' %}">
+    <title>Cadastro — FakeLetterboxd</title>
 </head>
 <body>
-    <!-- Formulário de cadastro -->
-    <h1>Cadastro</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="username">Nome de usuário:</label>
-        <input type="text" id="username" name="username" required><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="data_nascimento">Data de Nascimento:</label>
-        <input type="date" id="data_nascimento" name="data_nascimento"><br><br>
-        <label for="password1">Senha:</label>
-        <input type="password" id="password1" name="password1" required><br><br>
-        <label for="password2">Confirmar Senha:</label>
-        <input type="password" id="password2" name="password2" required><br><br>
-        <button type="submit">Cadastrar</button>
-    </form>
+    <header class="header">
+        <a href="{% url 'portal:home' %}" class="logo">FakeLetterboxd</a>
+    </header>
 
+    <div class="form-wrapper">
+        <div class="form-card">
+            <h1>Criar conta</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-submit">Cadastrar</button>
+            </form>
+            <div class="form-footer">
+                <p>Já tem conta? <a href="{% url 'accounts:login' %}">Entrar</a></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

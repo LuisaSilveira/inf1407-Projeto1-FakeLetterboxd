@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #14181c;
+    color: #9ab;
+    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2832;
+    border-bottom: 1px solid #456;
+    padding: 0 2rem;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.logo {
+    color: #00e054;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+/* Centralização do formulário */
+.form-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.form-card {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 420px;
+}
+
+.form-card h1 {
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Campos do formulário Django */
+.form-card p {
+    margin-bottom: 1.25rem;
+}
+
+.form-card label {
+    display: block;
+    color: #9ab;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-card input[type="text"],
+.form-card input[type="password"],
+.form-card input[type="email"],
+.form-card input[type="date"] {
+    width: 100%;
+    background: #14181c;
+    border: 1px solid #456;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.95rem;
+    padding: 0.6rem 0.85rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-card input:focus {
+    border-color: #00e054;
+}
+
+/* Erros e helptext do Django */
+.errorlist {
+    list-style: none;
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.helptext {
+    display: block;
+    color: #678;
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    line-height: 1.4;
+}
+
+/* Botão principal */
+.btn-submit {
+    width: 100%;
+    background: #00e054;
+    color: #14181c;
+    border: none;
+    border-radius: 4px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: background 0.2s ease;
+}
+
+.btn-submit:hover {
+    background: #00c048;
+}
+
+/* Link auxiliar abaixo do formulário */
+.form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #678;
+}
+
+.form-footer a {
+    color: #00e054;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .form-card {
+        padding: 1.75rem 1.25rem;
+    }
+}
