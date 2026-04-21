@@ -7,12 +7,13 @@
     <title>Lista Avaliações</title>
     <link rel="stylesheet" href="{% static 'main/css/listaAvaliacao.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/filtroBusca.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
 </head>
 <body>
-    <header class="main-header">
+    <!-- <header class="main-header"> -->
         <nav class="main-nav">{% include 'main/links.html' %}</nav>
-        <a href="{% url 'accounts:perfil' %}" class="btn-perfil">Acessar perfil</a>
-    </header>
+        <!-- <a href="{% url 'accounts:perfil' %}" class="btn-perfil">Acessar perfil</a>
+    </header> -->
     
     {% for message in messages %}
         <div class="mensagens {{ message.tags }}">

@@ -1,0 +1,44 @@
+/* Links de Navegação */
+.navbar-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #456;
+}
+
+.navbar-links a {
+    color: #00e054;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.navbar-links a:hover {
+    background: rgba(0, 224, 84, 0.1);
+    color: #00ff5e;
+    transform: translateY(-1px);
+}
+
+.navbar-links a:active {
+    color: #00e054;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .navbar-links {
+        gap: 0.25rem;
+    }
+
+    .navbar-links a {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
