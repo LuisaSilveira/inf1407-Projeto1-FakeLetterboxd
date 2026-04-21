@@ -95,10 +95,10 @@ body {
 .meta-info {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: center;
     color: #9ab;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .tipo-badge {
@@ -116,8 +116,42 @@ body {
     font-weight: 500;
 }
 
-.diretor {
+.duracao,
+.classificacao {
     color: #9ab;
+    font-size: 0.85rem;
+}
+
+/* Informações extras */
+.info-extras {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.5rem;
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    border: 1px solid #456;
+}
+
+.info-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+}
+
+.info-label {
+    color: #678;
+    font-size: 0.9rem;
+    min-width: 110px;
+    flex-shrink: 0;
+}
+
+.info-valor {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
 }
 
 .sinopse {
@@ -133,18 +167,6 @@ body {
 .sinopse p {
     color: #9ab;
     line-height: 1.7;
-}
-
-.genero-tag {
-    display: inline-block;
-    padding: 0.4rem 0.9rem;
-    background: #14181c;
-    border: 1px solid #456;
-    border-radius: 20px;
-    color: #9ab;
-    font-size: 0.85rem;
-    margin-top: 0.5rem;
-    width: fit-content;
 }
 
 /* Seção da avaliação */
@@ -190,6 +212,7 @@ body {
 .nota-label {
     font-size: 1.2rem;
     color: #678;
+    font-weight: 500;
 }
 
 /* Datas */
@@ -213,7 +236,7 @@ body {
 .data-label {
     color: #678;
     font-size: 0.9rem;
-    min-width: 150px;
+    min-width: 180px;
 }
 
 .data-valor {
@@ -338,5 +361,14 @@ body {
     
     .data-label {
         min-width: auto;
+    }
+    
+    .info-label {
+        min-width: 90px;
+        font-size: 0.85rem;
+    }
+    
+    .info-valor {
+        font-size: 0.85rem;
     }
 }
