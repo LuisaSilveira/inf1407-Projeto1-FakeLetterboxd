@@ -15,9 +15,9 @@ from django.contrib import messages
 
 class AvaliacaoListView(View):
     def get(self, request, *args, **kwargs):
-        # Começa com todas as avaliações ordenadas por data
-        avaliacoes = Avaliacao.objects.all().order_by('-dt_avaliacao')
         
+        avaliacoes = Avaliacao.objects.all()
+
         # filtro de busca por título
         busca_titulo = request.GET.get('busca_titulo', '').strip()
         if busca_titulo:
@@ -32,13 +32,25 @@ class AvaliacaoListView(View):
         genero_midia = request.GET.get('genero_midia', '')
         if genero_midia:
             avaliacoes = avaliacoes.filter(midia__generos=genero_midia)
+
+        # filtro por nota (maior para menor ou menor para maior)
+        ordem_nota = request.GET.get('ordem_nota', '')
+        if ordem_nota == 'maior':
+            avaliacoes = avaliacoes.order_by('-nota', '-dt_avaliacao')
+        elif ordem_nota == 'menor':
+            avaliacoes = avaliacoes.order_by('nota', '-dt_avaliacao')
+        else:
+            # Padrão: ordem por data (mais recente primeiro)
+            avaliacoes = avaliacoes.order_by('-dt_avaliacao')
         
         contexto = {
             'avaliacoes': avaliacoes,
             'busca_titulo': busca_titulo,
             'tipo_midia': tipo_midia,
             'genero_midia': genero_midia,
+            'ordem_nota': ordem_nota,
             'generos_choices': Midia.GENERO_CHOICES,
+
         }
  
         return render(request, 'main/listaAvaliacao.html', contexto)

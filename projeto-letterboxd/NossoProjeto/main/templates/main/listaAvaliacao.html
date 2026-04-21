@@ -19,7 +19,6 @@
     
     <h1>Lista de Avaliações</h1>
     
-    <!-- Barra de Busca e Filtros -->
     <div class="busca-container">
         <form method="get" class="busca-form">
             <!-- Busca por título -->
@@ -41,7 +40,7 @@
                     Séries
                 </option>
             </select>
-
+            
             <!-- Filtro por gênero -->
             <select name="genero_midia" class="filtro-select">
                 <option value="">Gênero: Todos</option>
@@ -52,14 +51,24 @@
                 {% endfor %}
             </select>
             
+            <!-- Ordenar por nota -->
+            <select name="ordem_nota" class="filtro-select">
+                <option value="">Ordenar por</option>
+                <option value="maior" {% if ordem_nota == 'maior' %}selected{% endif %}>
+                    Maior Nota
+                </option>
+                <option value="menor" {% if ordem_nota == 'menor' %}selected{% endif %}>
+                    Menor Nota
+                </option>
+            </select>
+            
             <button type="submit" class="btn-buscar">Filtrar</button>
-
-            {% if busca_titulo or tipo_midia or genero_midia %}
+            {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">Limpar</a>
             {% endif %}
         </form>
         
-        {% if busca_titulo or tipo_midia or genero_midia %}
+        {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
             <div class="busca-info">
                 {% if busca_titulo %}
                     Buscando por: <strong>"{{ busca_titulo }}"</strong>
@@ -68,7 +77,6 @@
                     {% if busca_titulo %} • {% endif %}
                     Tipo: <strong>{% if tipo_midia == 'filme' %}Filmes{% else %}Séries{% endif %}</strong>
                 {% endif %}
-
                 {% if genero_midia %}
                     {% if busca_titulo or tipo_midia %} • {% endif %}
                     Gênero: <strong>
@@ -76,6 +84,10 @@
                             {% if genero == genero_midia %}{{ label }}{% endif %}
                         {% endfor %}
                     </strong>
+                {% endif %}
+                {% if ordem_nota %}
+                    {% if busca_titulo or tipo_midia or genero_midia %} • {% endif %}
+                    Ordem: <strong>{% if ordem_nota == 'maior' %}Maior Nota{% else %}Menor Nota{% endif %}</strong>
                 {% endif %}
                 • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
             </div>
@@ -86,25 +98,40 @@
     <div class="avaliacoes-grid">
         {% for avaliacao in avaliacoes %}
         <article class="avaliacao-card">
-            <div class="card-header">
-                <span class="pessoa-nome">{{ avaliacao.pessoa }}</span>
-                <div class="nota-container">
-                    <span class="nota">{{ avaliacao.nota }}</span>
+            {% if avaliacao.midia.poster_url %}
+                <div class="poster-container">
+                    <img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}" class="midia-poster">
                 </div>
-            </div>
+            {% endif %}
             
-            <h2 class="midia-titulo">{{ avaliacao.midia }}</h2>
-            
-            <p class="comentario">{{ avaliacao.comentario|default:"Sem comentário" }}</p>
-            
-            <div class="card-actions">
-                <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-atualizar">Editar</a>
-                <a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}" class="btn btn-apagar">Excluir</a>
+            <div class="card-content">
+                <div class="card-header">
+                    <span class="pessoa-nome">{{ avaliacao.pessoa }}</span>
+                    <div class="nota-container">
+                        <span class="nota">{{ avaliacao.nota }}</span>
+                    </div>
+                </div>
+                
+                <h2 class="midia-titulo">{{ avaliacao.midia }}</h2>
+                
+                <!-- Data assistido -->
+                {% if avaliacao.assistido_em %}
+                    <div class="assistido-em">
+                        Assistido em {{ avaliacao.assistido_em|date:"d/m/Y" }}
+                    </div>
+                {% endif %}
+                
+                <p class="comentario">{{ avaliacao.comentario|default:"Sem comentário" }}</p>
+                
+                <div class="card-actions">
+                    <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-atualizar">Editar</a>
+                    <a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}" class="btn btn-apagar">Excluir</a>
+                </div>
             </div>
         </article>
         {% empty %}
         <div class="empty-state">
-            {% if busca_titulo or tipo_midia %}
+            {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
                 <p>Nenhuma avaliação encontrada com os filtros aplicados</p>
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-voltar">Ver todas as avaliações</a>
             {% else %}
