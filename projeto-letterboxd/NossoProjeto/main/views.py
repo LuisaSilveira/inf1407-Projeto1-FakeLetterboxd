@@ -58,39 +58,6 @@ class AvaliacaoListView(LoginRequiredMixin, View):
         return render(request, 'main/listaAvaliacao.html', contexto)
 
 
-class MidiaListView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        midias = Midia.objects.all()
-
-        contexto = {
-            'midias': midias
-        }
-
-        return render(
-            request,
-            'main/listaMidia.html',
-            contexto
-        )
-
-
-class PessoaCreateView(LoginRequiredMixin, View):
-    def get(self, request):
-        contexto = {
-            'formulario': PessoaModel2Form(),
-        }
-        return render(request, 'main/formulario.html', contexto)
-
-    def post(self, request, *args, **kwargs):
-        formulario = PessoaModel2Form(request.POST)
-        if formulario.is_valid():
-            formulario.save()
-            return HttpResponseRedirect(reverse_lazy('portal:home'))
-
-        contexto = {
-            'formulario': formulario,
-        }
-        return render(request, 'main/formulario.html', contexto)
-
 
 class AvaliacaoCreateView(LoginRequiredMixin, View):
     def get(self, request):

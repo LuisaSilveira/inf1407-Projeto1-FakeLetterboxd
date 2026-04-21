@@ -51,8 +51,7 @@ class Midia(models.Model):
     # Campos OMDB
     imdb_id = models.CharField(max_length=20, unique=True, blank=True, null=True)
     poster_url = models.URLField(max_length=500, blank=True)
-    
-    # NOVOS CAMPOS
+
     duracao = models.CharField(max_length=50, blank=True, help_text='Duração do filme (ex: 148 min)')
     idioma = models.CharField(max_length=100, blank=True, help_text='Idioma original')
     pais = models.CharField(max_length=100, blank=True, help_text='País de origem')
