@@ -1,6 +1,10 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUsuarioCreationForm
+
+@login_required(login_url='accounts:login')
+def perfil(request):
+    return render(request, 'accounts/perfil.html')
 
 def cadastro(request):
     if request.method == 'POST':

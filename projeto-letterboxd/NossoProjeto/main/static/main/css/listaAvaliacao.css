@@ -258,6 +258,95 @@ h1 {
 }
 
 /* Responsivo */
+/* Header com nav e botão de logout */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.main-nav {
+    flex: 1;
+}
+
+.btn-perfil {
+    background: transparent;
+    color: #00e054;
+    border: 2px solid #00e054;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-perfil:hover {
+    background: #00e054;
+    color: #14181c;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    min-width: 280px;
+}
+
+.modal-box p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-actions .btn {
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.btn-confirmar {
+    background: transparent;
+    color: #ff8000;
+    border-color: #ff8000;
+}
+
+.btn-confirmar:hover {
+    background: #ff8000;
+    color: #fff;
+}
+
+.btn-cancelar {
+    background: transparent;
+    color: #00e054;
+    border-color: #00e054;
+}
+
+.btn-cancelar:hover {
+    background: #00e054;
+    color: #14181c;
+}
+
 @media (max-width: 768px) { 
     .avaliacoes-grid {
         grid-template-columns: 1fr;

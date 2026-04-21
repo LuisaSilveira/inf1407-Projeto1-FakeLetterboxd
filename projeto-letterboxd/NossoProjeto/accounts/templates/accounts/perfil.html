@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/css/perfil.css' %}">
+    <title>Perfil — FakeLetterboxd</title>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'main:lista-avaliacao' %}" class="logo">FakeLetterboxd</a>
+        <button class="btn-logout" onclick="document.getElementById('modal-logout').style.display='flex'">Sair</button>
+    </header>
+
+    <div id="modal-logout" class="modal-overlay">
+        <div class="modal-box">
+            <p>Tem certeza que deseja sair?</p>
+            <div class="modal-actions">
+                <form method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-confirmar">Sair</button>
+                </form>
+                <button class="btn btn-cancelar" onclick="document.getElementById('modal-logout').style.display='none'">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="perfil-container">
+        <div class="perfil-card">
+            <div class="perfil-avatar">
+                {% if user.foto_perfil %}
+                    <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil">
+                {% else %}
+                    <div class="avatar-placeholder">{{ user.username|first|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="perfil-info">
+                <h1>{{ user.username }}</h1>
+                {% if user.email %}<p class="perfil-email">{{ user.email }}</p>{% endif %}
+                {% if user.data_nascimento %}<p class="perfil-detalhe">Nascimento: {{ user.data_nascimento|date:"d/m/Y" }}</p>{% endif %}
+                {% if user.bio %}<p class="perfil-bio">{{ user.bio }}</p>{% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>

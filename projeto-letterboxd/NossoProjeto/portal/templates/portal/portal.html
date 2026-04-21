@@ -12,8 +12,12 @@
         <span class="logo">FakeLetterboxd</span>
         <nav>
             <ul class="nav-links">
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'main:lista-avaliacao' %}" class="btn-cadastro">Fazer Avaliações</a></li>
+                {% else %}
                 <li><a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}" class="btn-login">Entrar</a></li>
                 <li><a href="{% url 'accounts:cadastro' %}" class="btn-cadastro">Cadastrar</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -22,8 +26,12 @@
         <h1 class="hero-title">Bem-vindo ao <span>FakeLetterboxd</span></h1>
         <p class="hero-subtitle">Avalie filmes e séries, compartilhe sua opinião e descubra o que assistir a seguir.</p>
         <div class="hero-actions">
+            {% if user.is_authenticated %}
+            <a href="{% url 'main:lista-avaliacao' %}" class="btn-primary">Fazer Avaliações</a>
+            {% else %}
             <a href="{% url 'accounts:cadastro' %}" class="btn-primary">Criar conta</a>
             <a href="{% url 'accounts:login' %}?next={% url 'main:lista-avaliacao' %}" class="btn-secondary">Já tenho conta</a>
+            {% endif %}
         </div>
     </main>
 </body>

@@ -1,0 +1,190 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #14181c;
+    color: #9ab;
+    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2832;
+    border-bottom: 1px solid #456;
+    padding: 0 2rem;
+    height: 60px;
+}
+
+.logo {
+    color: #00e054;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+
+.btn-logout {
+    background: transparent;
+    color: #ff8000;
+    border: 2px solid #ff8000;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-logout:hover {
+    background: #ff8000;
+    color: #fff;
+}
+
+/* Conteúdo */
+.perfil-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 2rem;
+}
+
+.perfil-card {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Avatar */
+.perfil-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #456;
+}
+
+.avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #2c3440;
+    border: 3px solid #456;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #00e054;
+}
+
+/* Informações */
+.perfil-info h1 {
+    color: #fff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.perfil-email {
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+}
+
+.perfil-detalhe {
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.perfil-bio {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #9ab;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    background: #1f2832;
+    border: 1px solid #456;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    min-width: 280px;
+}
+
+.modal-box p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    min-width: 100px;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.btn-confirmar {
+    background: transparent;
+    color: #ff8000;
+    border-color: #ff8000;
+}
+
+.btn-confirmar:hover {
+    background: #ff8000;
+    color: #fff;
+}
+
+.btn-cancelar {
+    background: transparent;
+    color: #00e054;
+    border-color: #00e054;
+}
+
+.btn-cancelar:hover {
+    background: #00e054;
+    color: #14181c;
+}
+
+@media (max-width: 480px) {
+    .perfil-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
