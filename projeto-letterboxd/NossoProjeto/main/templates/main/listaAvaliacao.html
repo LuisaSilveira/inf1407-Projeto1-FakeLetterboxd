@@ -19,25 +19,45 @@
     
     <h1>Lista de Avaliações</h1>
     
-    <!-- Barra de Busca -->
+    <!-- Barra de Busca e Filtros -->
     <div class="busca-container">
         <form method="get" class="busca-form">
+            <!-- Busca por título -->
             <input 
                 type="text" 
                 name="busca_titulo" 
-                placeholder="Buscar por título do filme ou série..."
+                placeholder="Buscar por título..."
                 value="{{ busca_titulo }}"
                 class="busca-input"
             >
-            <button type="submit" class="btn-buscar">Buscar</button>
-            {% if busca_titulo %}
-                <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">✕</a>
+            
+            <!-- Filtro por tipo -->
+            <select name="tipo_midia" class="filtro-select">
+                <option value="">Tipo: Todos</option>
+                <option value="filme" {% if tipo_midia == 'filme' %}selected{% endif %}>
+                    Filmes
+                </option>
+                <option value="serie" {% if tipo_midia == 'serie' %}selected{% endif %}>
+                    Séries
+                </option>
+            </select>
+            
+            <button type="submit" class="btn-buscar">Filtrar</button>
+            {% if busca_titulo or tipo_midia %}
+                <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">Limpar</a>
             {% endif %}
         </form>
         
-        {% if busca_titulo %}
+        {% if busca_titulo or tipo_midia %}
             <div class="busca-info">
-                Buscando por: <strong>"{{ busca_titulo }}"</strong> • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
+                {% if busca_titulo %}
+                    Buscando por: <strong>"{{ busca_titulo }}"</strong>
+                {% endif %}
+                {% if tipo_midia %}
+                    {% if busca_titulo %} • {% endif %}
+                    Tipo: <strong>{% if tipo_midia == 'filme' %}Filmes{% else %}Séries{% endif %}</strong>
+                {% endif %}
+                • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
             </div>
         {% endif %}
     </div>
@@ -64,8 +84,8 @@
         </article>
         {% empty %}
         <div class="empty-state">
-            {% if busca_titulo %}
-                <p>😔 Nenhuma avaliação encontrada para "{{ busca_titulo }}"</p>
+            {% if busca_titulo or tipo_midia %}
+                <p>Nenhuma avaliação encontrada com os filtros aplicados</p>
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-voltar">Ver todas as avaliações</a>
             {% else %}
                 <p>Ainda não há avaliações cadastradas</p>
