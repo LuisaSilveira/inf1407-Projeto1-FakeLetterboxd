@@ -347,11 +347,6 @@ h1 {
     color: #14181c;
 }
 
-.titulo-link{
-    color: #fff;
-    text-decoration: none;
-}
-
 @media (max-width: 768px) { 
     .avaliacoes-grid {
         grid-template-columns: 1fr;
