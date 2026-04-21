@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ avaliacao.midia.titulo }} - Avaliação</title>
+    <link rel="stylesheet" href="{% static 'main/css/detalheAvaliacao.css' %}">
+</head>
+<body>
+    {% include 'main/links.html' %}
+    
+    {% for message in messages %}
+        <div class="mensagens {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
+    <div class="detalhe-container">        
+        <div class="detalhe-card">
+            <div class="detalhe-header">
+                {% if avaliacao.midia.poster_url %}
+                    <div class="poster-grande">
+                        <img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}">
+                    </div>
+                {% endif %}
+                
+                <div class="info-principal">
+                    <h1 class="titulo-midia">{{ avaliacao.midia.titulo }}</h1>
+                    
+                    <div class="meta-info">
+                        <span class="tipo-badge">
+                            {% if avaliacao.midia.tipo == 'filme' %}🎬 Filme{% else %}📺 Série{% endif %}
+                        </span>
+                        <span class="ano">{{ avaliacao.midia.ano_lancamento }}</span>
+                        {% if avaliacao.midia.diretor %}
+                            <span class="diretor">Direção: {{ avaliacao.midia.diretor }}</span>
+                        {% endif %}
+                    </div>
+                    
+                    {% if avaliacao.midia.sinopse %}
+                        <div class="sinopse">
+                            <h3>Sinopse</h3>
+                            <p>{{ avaliacao.midia.sinopse }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="genero-tag">
+                        {{ avaliacao.midia.get_generos_display }}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="avaliacao-section">
+                <div class="avaliacao-header-info">
+                    <div class="avaliador">
+                        <span class="label">Avaliado por</span>
+                        <span class="nome">{{ avaliacao.pessoa.nome }}</span>
+                    </div>
+                    
+                    <div class="nota-display">
+                        <span class="nota-valor">{{ avaliacao.nota }}</span>
+                        <span class="nota-label">/ 5</span>
+                    </div>
+                </div>
+                
+                <div class="datas-info">
+                    {% if avaliacao.assistido_em %}
+                        <div class="data-item">
+                            <span class="data-label">Assistido em:</span>
+                            <span class="data-valor">{{ avaliacao.assistido_em|date:"d/m/Y" }}</span>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="data-item">
+                        <span class="data-label">Avaliado em:</span>
+                        <span class="data-valor">{{ avaliacao.dt_avaliacao|date:"d/m/Y" }}</span>
+                    </div>
+                    
+                    {% if avaliacao.dt_atualizacao != avaliacao.dt_avaliacao %}
+                        <div class="data-item">
+                            <span class="data-label">Última atualização:</span>
+                            <span class="data-valor">{{ avaliacao.dt_atualizacao|date:"d/m/Y" }}</span>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% if avaliacao.comentario %}
+                    <div class="comentario-completo">
+                        <h3>Comentário</h3>
+                        <p>{{ avaliacao.comentario }}</p>
+                    </div>
+                {% else %}
+                    <div class="sem-comentario">
+                        <p>Esta avaliação não possui comentário.</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="acoes-detalhe">
+                <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-editar">
+                    Editar Avaliação
+                </a>
+                <a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}" class="btn btn-excluir">
+                    Excluir Avaliação
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

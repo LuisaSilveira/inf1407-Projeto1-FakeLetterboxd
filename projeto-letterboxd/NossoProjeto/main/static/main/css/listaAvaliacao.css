@@ -44,12 +44,23 @@ h1 {
     gap: 1.25rem;
     padding: 1.25rem;
     min-height: 100%;
+    cursor: pointer;
 }
 
 .avaliacao-card:hover {
     background: #2c3440;
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+
+.card-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
 }
 
 /* Container do poster */
@@ -62,6 +73,8 @@ h1 {
     background: #14181c;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+
 
 .midia-poster {
     width: 100%;
@@ -188,6 +201,8 @@ h1 {
     font-size: 0.85rem;
     transition: all 0.2s ease;
     border: 2px solid transparent;
+    position: relative;
+    z-index: 2;
 }
 
 .btn-atualizar {

@@ -98,6 +98,7 @@
     <div class="avaliacoes-grid">
         {% for avaliacao in avaliacoes %}
         <article class="avaliacao-card">
+            <a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}" class="card-link"></a>
             {% if avaliacao.midia.poster_url %}
                 <div class="poster-container">
                     <img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}" class="midia-poster">

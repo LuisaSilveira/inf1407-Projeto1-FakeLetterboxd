@@ -16,8 +16,7 @@ urlpatterns = [
  name='apaga-avaliacao'),
  path('midia/', views.MidiaListView.as_view(),
  name='lista-midia'),
-#  path('midias/buscar/', views.MidiaBuscaView.as_view(), 
-#  name='busca-midia'),
-#  path('midias/importar/', views.MidiaImportarView.as_view(), 
-#  name='importar-midia'),
+ path('avaliacao/<int:pk>/', views.AvaliacaoDetailView.as_view(), 
+ name='detalhe-avaliacao'),
+
 ]
