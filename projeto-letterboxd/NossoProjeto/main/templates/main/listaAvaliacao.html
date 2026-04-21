@@ -130,9 +130,15 @@
             
             <div class="card-content">
                 <div class="card-header">
-                    <a href="{% url 'main:perfil-pessoa' pk=avaliacao.pessoa.id %}" class="pessoa-nome pessoa-link">
-                        {{ avaliacao.pessoa.username }}
-                    </a>
+                    {% if avaliacao.pessoa == request.user %}
+                        <a href="{% url 'accounts:perfil' %}" class="pessoa-nome pessoa-link">
+                            {{ avaliacao.pessoa.username }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'main:perfil-pessoa' pk=avaliacao.pessoa.id %}" class="pessoa-nome pessoa-link">
+                            {{ avaliacao.pessoa.username }}
+                        </a>
+                    {% endif %}
                     <div class="nota-container">
                         <span class="nota">{{ avaliacao.nota }}</span>
                     </div>
