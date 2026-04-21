@@ -23,7 +23,7 @@
                     <label>{{ form.foto_perfil.label }}</label>
                     <div class="foto-row">
                         <div class="foto-preview">
-                            {% if form.instance.foto_perfil and form.instance.foto_perfil.name != 'static/accounts/img/padrao.png' %}
+                            {% if form.instance.foto_perfil %}
                                 <img src="{{ form.instance.foto_perfil.url }}" alt="Foto atual" width="52" height="52">
                             {% else %}
                                 <img src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto atual" width="52" height="52">
