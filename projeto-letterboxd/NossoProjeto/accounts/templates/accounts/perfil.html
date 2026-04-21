@@ -27,24 +27,27 @@
         </div>
     </div>
 
-    <main class="perfil-container">
-        <a href="{% url 'accounts:perfil-update' pk=user.id %}" class="btn-editar">Editar perfil</a>
-        <div class="perfil-card">
-            <div class="perfil-avatar">
-                {% if user.foto_perfil %}
-                    <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil">
-                {% else %}
-                    <img src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de perfil">
-                {% endif %}
+    <section class="perfil-header">
+        <div class="perfil-avatar">
+            {% if user.foto_perfil %}
+                <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil">
+            {% else %}
+                <img src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de perfil">
+            {% endif %}
+        </div>
+        <div class="perfil-info">
+            <p class="perfil-username">{{ user.username }}</p>
+            <div class="perfil-stats">
+                <span><strong>{{ avaliacoes|length }}</strong> avalia{{ avaliacoes|length|pluralize:"ção,ções" }}</span>
             </div>
-            <div class="perfil-info">
-                <h1>{{ user.username }}</h1>
-                {% if user.email %}<p class="perfil-email">{{ user.email }}</p>{% endif %}
-                {% if user.data_nascimento %}<p class="perfil-detalhe">Nascimento: {{ user.data_nascimento|date:"d/m/Y" }}</p>{% endif %}
+            <div class="perfil-detalhes">
+                {% if user.email %}<p>{{ user.email }}</p>{% endif %}
+                {% if user.data_nascimento %}<p>Nascimento: {{ user.data_nascimento|date:"d/m/Y" }}</p>{% endif %}
                 {% if user.bio %}<p class="perfil-bio">{{ user.bio }}</p>{% endif %}
             </div>
+            <a href="{% url 'accounts:perfil-update' pk=user.id %}" class="btn-editar">Editar perfil</a>
         </div>
-    </main>
+    </section>
 
     <section class="avaliacoes-perfil">
         <h2 class="avaliacoes-perfil-titulo">Minhas Avaliações</h2>

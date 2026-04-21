@@ -10,10 +10,7 @@
     <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
 </head>
 <body>
-    <!-- <header class="main-header"> -->
-        <nav class="main-nav">{% include 'main/links.html' %}</nav>
-        <!-- <a href="{% url 'accounts:perfil' %}" class="btn-perfil">Acessar perfil</a>
-    </header> -->
+    {% include 'main/links.html' %}
     
     {% for message in messages %}
         <div class="mensagens {{ message.tags }}">

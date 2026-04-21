@@ -10,15 +10,15 @@
     
 </head>
 <body>
+    {% include 'main/links.html' %}
+
     <div class="container">
-        {% include 'main/links.html' %}
-        
         {% for message in messages %}
             <div class="mensagens {{ message.tags }}">
                 {{ message }}
             </div>
         {% endfor %}
-        
+
         <h1>Nova Avaliação</h1>
         
         <!-- Buscar Mídia -->

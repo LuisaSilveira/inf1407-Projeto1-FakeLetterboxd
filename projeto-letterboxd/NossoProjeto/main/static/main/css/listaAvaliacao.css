@@ -11,7 +11,6 @@ body {
     color: #9ab;
     font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
-    padding: 2rem;
 }
 
 h1 {
@@ -19,6 +18,7 @@ h1 {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 2rem;
+    padding: 2rem 2rem 0;
     text-align: center;
 }
 
@@ -26,6 +26,7 @@ h1 {
 .avaliacoes-grid {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem 2rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 1.5rem;
@@ -363,17 +364,15 @@ h1 {
     color: #14181c;
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .avaliacoes-grid {
         grid-template-columns: 1fr;
+        padding: 0 1rem 1rem;
     }
-    
-    body {
-        padding: 1rem;
-    }
-    
+
     h1 {
         font-size: 1.5rem;
+        padding: 1.5rem 1rem 0;
     }
 }
 

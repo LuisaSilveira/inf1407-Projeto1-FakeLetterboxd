@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
 </head>
 <body>
-    <div class="container">
-        {% include 'main/links.html' %}
+    {% include 'main/links.html' %}
 
+    <div class="container">
         {% for message in messages %}
             <div class="mensagens {{ message.tags }}">
                 {{ message }}

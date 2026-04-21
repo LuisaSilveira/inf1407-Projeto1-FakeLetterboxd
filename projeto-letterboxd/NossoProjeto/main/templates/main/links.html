@@ -1,6 +1,7 @@
-<nav class="navbar-links">
-    <a href="/">Home-Page</a>
-    <a href="{% url 'main:lista-avaliacao' %}">Lista Avaliação</a>
-    <a href="{% url 'main:cria-avaliacao' %}">Cadastrar Avaliação</a>
-    <a href="{% url 'accounts:perfil' %}">Perfil</a>
-</nav>
+<header class="header">
+    <a href="{% url 'main:lista-avaliacao' %}" class="logo">FakeLetterboxd</a>
+    <nav class="header-nav">
+        <a href="{% url 'main:cria-avaliacao' %}" class="nav-link nav-link-verde">Nova avaliação</a>
+        <a href="{% url 'accounts:perfil' %}" class="nav-link nav-link-laranja">Meu perfil</a>
+    </nav>
+</header>
