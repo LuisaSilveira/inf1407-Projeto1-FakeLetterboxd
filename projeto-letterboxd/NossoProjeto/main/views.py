@@ -30,6 +30,11 @@ class AvaliacaoListView(LoginRequiredMixin, View):
         if genero_midia:
             avaliacoes = avaliacoes.filter(midia__generos=genero_midia)
 
+        #filtro de busca por pessoa/usuário
+        busca_pessoa = request.GET.get('busca_pessoa', '').strip()
+        if busca_pessoa:
+            avaliacoes = avaliacoes.filter(pessoa__nome__icontains=busca_pessoa)
+
         # filtro por nota (maior para menor ou menor para maior)
         ordem_nota = request.GET.get('ordem_nota', '')
         if ordem_nota == 'maior':
@@ -46,6 +51,7 @@ class AvaliacaoListView(LoginRequiredMixin, View):
             'tipo_midia': tipo_midia,
             'genero_midia': genero_midia,
             'ordem_nota': ordem_nota,
+            'busca_pessoa': busca_pessoa,
             'generos_choices': Midia.GENERO_CHOICES,
         }
  

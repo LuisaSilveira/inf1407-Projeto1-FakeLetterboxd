@@ -1,66 +1,49 @@
-/* Estilos para Barra de Busca por Título */
-
+/* Container de busca e filtros */
 .busca-container {
     max-width: 1200px;
     margin: 0 auto 2rem;
-    padding: 0 1rem;
-}
-
-.busca-form {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    background: #1f2832;
-    border: 1px solid #456;
+    background: #2c3440;
+    padding: 1.5rem;
     border-radius: 8px;
-    padding: 1rem;
-    flex-wrap: wrap;
+    border: 1px solid #456;
 }
 
-/* Input de busca */
+/* Formulário de busca */
+.busca-form {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Inputs de busca - 3 colunas cada (metade do grid) */
 .busca-input {
-    flex: 1;
-    min-width: 250px;
-    padding: 0.75rem 1.25rem;
+    grid-column: span 3;
+    padding: 0.75rem 1rem;
     background: #14181c;
     border: 1px solid #456;
     border-radius: 4px;
     color: #fff;
-    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-family: inherit;
     transition: all 0.2s ease;
 }
 
-/* Select de filtro */
+/* Selects - 2 colunas cada (1/3 do grid) */
 .filtro-select {
-    padding: 0.75rem 1.25rem;
-    padding-right: 40px;
+    grid-column: span 2;
+    padding: 0.75rem 1rem;
     background: #14181c;
     border: 1px solid #456;
     border-radius: 4px;
-    color: #9ab;
-    font-family: 'Graphik', 'Helvetica Neue', Arial, sans-serif;
-    font-size: 0.95rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
     cursor: pointer;
     transition: all 0.2s ease;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ab' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    min-width: 150px;
 }
 
-.filtro-select option {
-    background: #14181c;
-    color: #9ab;
-}
-
-.busca-input:focus {
-    outline: none;
-    border-color: #00e054;
-    background: #1f2832;
-}
-
+.busca-input:focus,
 .filtro-select:focus {
     outline: none;
     border-color: #00e054;
@@ -71,126 +54,121 @@
     color: #678;
 }
 
-/* Botão de buscar */
+.filtro-select option {
+    background: #14181c;
+    color: #fff;
+}
+
+/* Botões - 3 colunas cada (metade do grid) */
+.btn-buscar,
+.btn-limpar {
+    grid-column: span 3;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-align: center;
+}
+
 .btn-buscar {
-    padding: 0.75rem 2rem;
     background: #00e054;
     color: #14181c;
     border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
 }
 
 .btn-buscar:hover {
     background: #00b042;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 224, 84, 0.3);
 }
 
-/* Botão de limpar (X) */
 .btn-limpar {
-    padding: 0.75rem 1rem;
     background: transparent;
     color: #ff8000;
     border: 2px solid #ff8000;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.95rem;
     text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 45px;
 }
 
 .btn-limpar:hover {
     background: #ff8000;
     color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.3);
 }
 
-/* Informação da busca */
+/* Informações de busca */
 .busca-info {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
+    margin-top: 1.25rem;
+    padding: 1rem;
     background: rgba(0, 224, 84, 0.1);
     border-left: 3px solid #00e054;
     border-radius: 4px;
-    color: #9ab;
+    color: #abc;
     font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 .busca-info strong {
     color: #fff;
-}
-
-/* Botão voltar */
-.btn-voltar {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background: #00e054;
-    color: #14181c;
-    text-decoration: none;
-    border-radius: 4px;
     font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.btn-voltar:hover {
-    background: #00b042;
-    transform: translateY(-1px);
-}
-
-/* Estado vazio atualizado */
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: #678;
-    grid-column: 1 / -1;
-}
-
-.empty-state p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
 }
 
 /* Responsivo */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+    /* Em tablets: 4 colunas - inputs ocupam 2, selects 1, botões 2 */
     .busca-form {
-        flex-direction: column;
-        gap: 0.75rem;
+        grid-template-columns: repeat(4, 1fr);
     }
     
     .busca-input {
-        width: 100%;
-        min-width: auto;
+        grid-column: span 2;
     }
     
     .filtro-select {
-        width: 100%;
-        min-width: auto;
+        grid-column: span 2;
     }
     
-    .btn-buscar {
-        width: 100%;
-    }
-    
+    .btn-buscar,
     .btn-limpar {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Em mobile: tudo em coluna única */
+    .busca-container {
+        padding: 1rem;
+    }
+    
+    .busca-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .busca-input,
+    .filtro-select,
+    .btn-buscar,
+    .btn-limpar {
+        grid-column: span 1;
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .busca-container {
-        padding: 0 0.5rem;
+        padding: 0.75rem;
     }
     
-    .busca-form {
-        padding: 0.75rem;
+    .busca-input,
+    .filtro-select,
+    .btn-buscar,
+    .btn-limpar {
+        font-size: 0.85rem;
+        padding: 0.65rem 0.85rem;
     }
 }

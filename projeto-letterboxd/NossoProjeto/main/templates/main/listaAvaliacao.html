@@ -33,6 +33,15 @@
                 class="busca-input"
             >
             
+            <!-- Busca por usuário -->
+            <input 
+                type="text" 
+                name="busca_pessoa" 
+                placeholder="Buscar por usuário..."
+                value="{{ busca_pessoa }}"
+                class="busca-input"
+            >
+            
             <!-- Filtro por tipo -->
             <select name="tipo_midia" class="filtro-select">
                 <option value="">Tipo: Todos</option>
@@ -66,32 +75,42 @@
             </select>
             
             <button type="submit" class="btn-buscar">Filtrar</button>
-            {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+            
+            {% if busca_titulo or busca_pessoa or tipo_midia or genero_midia or ordem_nota %}
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">Limpar</a>
             {% endif %}
         </form>
         
-        {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+        {% if busca_titulo or busca_pessoa or tipo_midia or genero_midia or ordem_nota %}
             <div class="busca-info">
                 {% if busca_titulo %}
-                    Buscando por: <strong>"{{ busca_titulo }}"</strong>
+                    Título: <strong>"{{ busca_titulo }}"</strong>
                 {% endif %}
-                {% if tipo_midia %}
+                
+                {% if busca_pessoa %}
                     {% if busca_titulo %} • {% endif %}
+                    Usuário: <strong>"{{ busca_pessoa }}"</strong>
+                {% endif %}
+                
+                {% if tipo_midia %}
+                    {% if busca_titulo or busca_pessoa %} • {% endif %}
                     Tipo: <strong>{% if tipo_midia == 'filme' %}Filmes{% else %}Séries{% endif %}</strong>
                 {% endif %}
+                
                 {% if genero_midia %}
-                    {% if busca_titulo or tipo_midia %} • {% endif %}
+                    {% if busca_titulo or busca_pessoa or tipo_midia %} • {% endif %}
                     Gênero: <strong>
                         {% for genero, label in generos_choices %}
                             {% if genero == genero_midia %}{{ label }}{% endif %}
                         {% endfor %}
                     </strong>
                 {% endif %}
+                
                 {% if ordem_nota %}
-                    {% if busca_titulo or tipo_midia or genero_midia %} • {% endif %}
+                    {% if busca_titulo or busca_pessoa or tipo_midia or genero_midia %} • {% endif %}
                     Ordem: <strong>{% if ordem_nota == 'maior' %}Maior Nota{% else %}Menor Nota{% endif %}</strong>
                 {% endif %}
+                
                 • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
             </div>
         {% endif %}
@@ -101,7 +120,6 @@
     <div class="avaliacoes-grid">
         {% for avaliacao in avaliacoes %}
         <article class="avaliacao-card">
-            <a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}" class="card-link"></a>
             {% if avaliacao.midia.poster_url %}
                 <div class="poster-container">
                     <img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}" class="midia-poster">
@@ -116,7 +134,12 @@
                     </div>
                 </div>
                 
-                <h2 class="midia-titulo">{{ avaliacao.midia }}</h2>
+                <!-- Título com link para detalhes -->
+                <h2 class="midia-titulo">
+                    <a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}" class="titulo-link">
+                        {{ avaliacao.midia }}
+                    </a>
+                </h2>
                 
                 <!-- Data assistido -->
                 {% if avaliacao.assistido_em %}
@@ -135,7 +158,7 @@
         </article>
         {% empty %}
         <div class="empty-state">
-            {% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+            {% if busca_titulo or busca_pessoa or tipo_midia or genero_midia or ordem_nota %}
                 <p>Nenhuma avaliação encontrada com os filtros aplicados</p>
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-voltar">Ver todas as avaliações</a>
             {% else %}
@@ -144,7 +167,5 @@
         </div>
         {% endfor %}
     </div>
-
-    <script src="{% static 'main/js/mensagens.js' %}"></script>
 </body>
 </html>
