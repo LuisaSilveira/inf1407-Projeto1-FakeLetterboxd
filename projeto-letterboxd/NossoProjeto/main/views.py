@@ -27,11 +27,18 @@ class AvaliacaoListView(View):
         tipo_midia = request.GET.get('tipo_midia', '')
         if tipo_midia:
             avaliacoes = avaliacoes.filter(midia__tipo=tipo_midia)
+
+        # filtro de genero da mídia
+        genero_midia = request.GET.get('genero_midia', '')
+        if genero_midia:
+            avaliacoes = avaliacoes.filter(midia__generos=genero_midia)
         
         contexto = {
             'avaliacoes': avaliacoes,
             'busca_titulo': busca_titulo,
             'tipo_midia': tipo_midia,
+            'genero_midia': genero_midia,
+            'generos_choices': Midia.GENERO_CHOICES,
         }
  
         return render(request, 'main/listaAvaliacao.html', contexto)

@@ -41,14 +41,25 @@
                     Séries
                 </option>
             </select>
+
+            <!-- Filtro por gênero -->
+            <select name="genero_midia" class="filtro-select">
+                <option value="">Gênero: Todos</option>
+                {% for genero, label in generos_choices %}
+                    <option value="{{ genero }}" {% if genero_midia == genero %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
             
             <button type="submit" class="btn-buscar">Filtrar</button>
-            {% if busca_titulo or tipo_midia %}
+
+            {% if busca_titulo or tipo_midia or genero_midia %}
                 <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">Limpar</a>
             {% endif %}
         </form>
         
-        {% if busca_titulo or tipo_midia %}
+        {% if busca_titulo or tipo_midia or genero_midia %}
             <div class="busca-info">
                 {% if busca_titulo %}
                     Buscando por: <strong>"{{ busca_titulo }}"</strong>
@@ -56,6 +67,15 @@
                 {% if tipo_midia %}
                     {% if busca_titulo %} • {% endif %}
                     Tipo: <strong>{% if tipo_midia == 'filme' %}Filmes{% else %}Séries{% endif %}</strong>
+                {% endif %}
+
+                {% if genero_midia %}
+                    {% if busca_titulo or tipo_midia %} • {% endif %}
+                    Gênero: <strong>
+                        {% for genero, label in generos_choices %}
+                            {% if genero == genero_midia %}{{ label }}{% endif %}
+                        {% endfor %}
+                    </strong>
                 {% endif %}
                 • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
             </div>
