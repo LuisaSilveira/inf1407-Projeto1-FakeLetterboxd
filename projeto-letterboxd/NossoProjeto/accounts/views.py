@@ -5,7 +5,8 @@ from django.views.generic.edit import UpdateView
 
 @login_required(login_url='accounts:login')
 def perfil(request):
-    return render(request, 'accounts/perfil.html')
+    avaliacoes = request.user.avaliacoes.select_related('midia').order_by('-dt_avaliacao')
+    return render(request, 'accounts/perfil.html', {'avaliacoes': avaliacoes})
 
 def cadastro(request):
     if request.method == 'POST':

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main/css/listaAvaliacao.css' %}">
     <link rel="stylesheet" href="{% static 'accounts/css/perfil.css' %}">
     <title>Perfil — FakeLetterboxd</title>
 </head>
@@ -44,5 +45,42 @@
             </div>
         </div>
     </main>
+
+    <section class="avaliacoes-perfil">
+        <h2 class="avaliacoes-perfil-titulo">Minhas Avaliações</h2>
+        <div class="avaliacoes-grid">
+            {% for avaliacao in avaliacoes %}
+            <article class="avaliacao-card">
+                <a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}" class="card-link"></a>
+                {% if avaliacao.midia.poster_url %}
+                    <div class="poster-container">
+                        <img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}" class="midia-poster">
+                    </div>
+                {% endif %}
+                <div class="card-content">
+                    <div class="card-header">
+                        <span class="pessoa-nome">{{ user.username }}</span>
+                        <div class="nota-container">
+                            <span class="nota">{{ avaliacao.nota }}</span>
+                        </div>
+                    </div>
+                    <h2 class="midia-titulo">{{ avaliacao.midia }}</h2>
+                    {% if avaliacao.assistido_em %}
+                        <div class="assistido-em">Assistido em {{ avaliacao.assistido_em|date:"d/m/Y" }}</div>
+                    {% endif %}
+                    <p class="comentario">{{ avaliacao.comentario|default:"Sem comentário" }}</p>
+                    <div class="card-actions">
+                        <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-atualizar">Editar</a>
+                        <a href="{% url 'main:apaga-avaliacao' pk=avaliacao.id %}" class="btn btn-apagar">Excluir</a>
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="empty-state">
+                <p>Você ainda não tem avaliações cadastradas.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 </body>
 </html>
