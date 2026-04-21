@@ -16,7 +16,7 @@
         </div>
     {% endfor %}
     
-    <div class="detalhe-container">        
+    <div class="detalhe-container">
         <div class="detalhe-card">
             <div class="detalhe-header">
                 {% if avaliacao.midia.poster_url %}
@@ -33,21 +33,65 @@
                             {% if avaliacao.midia.tipo == 'filme' %}🎬 Filme{% else %}📺 Série{% endif %}
                         </span>
                         <span class="ano">{{ avaliacao.midia.ano_lancamento }}</span>
-                        {% if avaliacao.midia.diretor %}
-                            <span class="diretor">Direção: {{ avaliacao.midia.diretor }}</span>
+                        
+                        {% if avaliacao.midia.duracao %}
+                            <span class="duracao">⏱️ {{ avaliacao.midia.duracao }}</span>
+                        {% endif %}
+                        
+                        {% if avaliacao.midia.classificacao and avaliacao.midia.classificacao != 'N/A' %}
+                            <span class="classificacao">🔞 {{ avaliacao.midia.classificacao }}</span>
                         {% endif %}
                     </div>
                     
-                    {% if avaliacao.midia.sinopse %}
+                    <!-- Informações adicionais -->
+                    <div class="info-extras">
+                        {% if avaliacao.midia.diretor and avaliacao.midia.diretor != 'N/A' %}
+                            <div class="info-item">
+                                <span class="info-label">🎬 Direção:</span>
+                                <span class="info-valor">{{ avaliacao.midia.diretor }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        {% if avaliacao.midia.elenco and avaliacao.midia.elenco != 'N/A' %}
+                            <div class="info-item">
+                                <span class="info-label">⭐ Elenco:</span>
+                                <span class="info-valor">{{ avaliacao.midia.elenco }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="info-item">
+                            <span class="info-label">🎭 Gênero:</span>
+                            <span class="info-valor">{{ avaliacao.midia.get_generos_display }}</span>
+                        </div>
+                        
+                        {% if avaliacao.midia.pais and avaliacao.midia.pais != 'N/A' %}
+                            <div class="info-item">
+                                <span class="info-label">🌍 País:</span>
+                                <span class="info-valor">{{ avaliacao.midia.pais }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        {% if avaliacao.midia.idioma and avaliacao.midia.idioma != 'N/A' %}
+                            <div class="info-item">
+                                <span class="info-label">🗣️ Idioma:</span>
+                                <span class="info-valor">{{ avaliacao.midia.idioma }}</span>
+                            </div>
+                        {% endif %}
+                        
+                        {% if avaliacao.midia.tipo == 'serie' and avaliacao.midia.num_temporadas %}
+                            <div class="info-item">
+                                <span class="info-label">📺 Temporadas:</span>
+                                <span class="info-valor">{{ avaliacao.midia.num_temporadas }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if avaliacao.midia.sinopse and avaliacao.midia.sinopse != 'N/A' %}
                         <div class="sinopse">
                             <h3>Sinopse</h3>
                             <p>{{ avaliacao.midia.sinopse }}</p>
                         </div>
                     {% endif %}
-                    
-                    <div class="genero-tag">
-                        {{ avaliacao.midia.get_generos_display }}
-                    </div>
                 </div>
             </div>
             
@@ -67,19 +111,19 @@
                 <div class="datas-info">
                     {% if avaliacao.assistido_em %}
                         <div class="data-item">
-                            <span class="data-label">Assistido em:</span>
+                            <span class="data-label">📅 Assistido em:</span>
                             <span class="data-valor">{{ avaliacao.assistido_em|date:"d/m/Y" }}</span>
                         </div>
                     {% endif %}
                     
                     <div class="data-item">
-                        <span class="data-label">Avaliado em:</span>
+                        <span class="data-label">📝 Avaliado em:</span>
                         <span class="data-valor">{{ avaliacao.dt_avaliacao|date:"d/m/Y" }}</span>
                     </div>
                     
                     {% if avaliacao.dt_atualizacao != avaliacao.dt_avaliacao %}
                         <div class="data-item">
-                            <span class="data-label">Última atualização:</span>
+                            <span class="data-label">🔄 Última atualização:</span>
                             <span class="data-valor">{{ avaliacao.dt_atualizacao|date:"d/m/Y" }}</span>
                         </div>
                     {% endif %}
@@ -107,5 +151,7 @@
             </div>
         </div>
     </div>
+
+    <script src="{% static 'main/js/mensagens.js' %}"></script>
 </body>
 </html>

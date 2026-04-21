@@ -19,6 +19,7 @@ class Pessoa(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Midia(models.Model):
     TIPO_CHOICES = [
         ('filme', 'Filme'),
@@ -38,6 +39,7 @@ class Midia(models.Model):
         ('documentario', 'Documentário'),
     ]
 
+    # Campos básicos
     titulo = models.CharField(max_length=200)
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     sinopse = models.TextField(blank=True)
@@ -46,11 +48,25 @@ class Midia(models.Model):
     poster = models.ImageField(upload_to='posters/', null=True, blank=True)
     generos = models.CharField(max_length=50, choices=GENERO_CHOICES)
 
+    # Campos OMDB
     imdb_id = models.CharField(max_length=20, unique=True, blank=True, null=True)
     poster_url = models.URLField(max_length=500, blank=True)
     
+    # NOVOS CAMPOS
+    duracao = models.CharField(max_length=50, blank=True, help_text='Duração do filme (ex: 148 min)')
+    idioma = models.CharField(max_length=100, blank=True, help_text='Idioma original')
+    pais = models.CharField(max_length=100, blank=True, help_text='País de origem')
+    elenco = models.TextField(blank=True, help_text='Elenco principal (separado por vírgulas)')
+    num_temporadas = models.IntegerField(null=True, blank=True, help_text='Número de temporadas (apenas séries)')
+    classificacao = models.CharField(max_length=20, blank=True, help_text='Classificação indicativa')
+    
     def __str__(self):
         return f'{self.titulo} ({self.ano_lancamento})'
+    
+    def get_generos_display(self):
+        """Retorna o nome do gênero formatado"""
+        return dict(self.GENERO_CHOICES).get(self.generos, self.generos)
+
 
 class Avaliacao(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='avaliacoes')

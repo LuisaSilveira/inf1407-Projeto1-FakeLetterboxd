@@ -91,6 +91,14 @@ class OMDBService:
         except ValueError:
             ano_lancamento = 2000
         
+        # Trata número de temporadas (apenas para séries)
+        num_temporadas = None
+        if tipo == 'serie' and data.get('totalSeasons') != 'N/A':
+            try:
+                num_temporadas = int(data.get('totalSeasons', 0))
+            except (ValueError, TypeError):
+                num_temporadas = None
+        
         return {
             'titulo': data.get('Title', ''),
             'tipo': tipo,
@@ -100,4 +108,12 @@ class OMDBService:
             'generos': genero,
             'poster_url': data.get('Poster', ''),
             'imdb_id': data.get('imdbID', ''),
+            
+            # Novos campos
+            'duracao': data.get('Runtime', ''),
+            'idioma': data.get('Language', ''),
+            'pais': data.get('Country', ''),
+            'elenco': data.get('Actors', ''),
+            'num_temporadas': num_temporadas,
+            'classificacao': data.get('Rated', ''),
         }

@@ -1,18 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from django.views.generic.base import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin   
 
 from main.forms import AvaliacaoModel2Form, PessoaModel2Form
 from main.models import Midia, Avaliacao, Pessoa
-
-from django.shortcuts import render, get_object_or_404, redirect
-
 from main.services.omdb_service import OMDBService
 from django.contrib import messages
 
-# Create your views here.
 
 class AvaliacaoListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
@@ -51,7 +47,6 @@ class AvaliacaoListView(LoginRequiredMixin, View):
             'genero_midia': genero_midia,
             'ordem_nota': ordem_nota,
             'generos_choices': Midia.GENERO_CHOICES,
-
         }
  
         return render(request, 'main/listaAvaliacao.html', contexto)
@@ -119,9 +114,14 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
                         generos=dados['generos'],
                         imdb_id=dados['imdb_id'],
                         poster_url=dados['poster_url'],
+                        # Novos campos
+                        duracao=dados.get('duracao', ''),
+                        idioma=dados.get('idioma', ''),
+                        pais=dados.get('pais', ''),
+                        elenco=dados.get('elenco', ''),
+                        num_temporadas=dados.get('num_temporadas'),
+                        classificacao=dados.get('classificacao', ''),
                     )
-
-            trocar_midia = False
         
         contexto = {
             'formulario': AvaliacaoModel2Form(),
@@ -153,6 +153,7 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
         }
         return render(request, 'main/criaAvaliacao.html', contexto)
 
+
 class AvaliacaoUpdateView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
@@ -182,6 +183,13 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
                         generos=dados['generos'],
                         imdb_id=dados['imdb_id'],
                         poster_url=dados['poster_url'],
+                        # Novos campos
+                        duracao=dados.get('duracao', ''),
+                        idioma=dados.get('idioma', ''),
+                        pais=dados.get('pais', ''),
+                        elenco=dados.get('elenco', ''),
+                        num_temporadas=dados.get('num_temporadas'),
+                        classificacao=dados.get('classificacao', ''),
                     )
 
         contexto = {
@@ -230,11 +238,13 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
             }
             return render(request, 'main/atualizaAvaliacao.html', contexto)
 
+
 class AvaliacaoDeleteView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         avaliacao = Avaliacao.objects.get(pk=pk)
         contexto = { 'avaliacao': avaliacao, }
         return render(request, 'main/apagaAvaliacao.html', contexto)
+    
     def post(self, request, pk, *args, **kwargs):
         avaliacao = Avaliacao.objects.get(pk=pk)
         avaliacao.delete()
@@ -250,4 +260,3 @@ class AvaliacaoDetailView(LoginRequiredMixin, View):
             'avaliacao': avaliacao,
         }
         return render(request, 'main/detalheAvaliacao.html', contexto)
- 
