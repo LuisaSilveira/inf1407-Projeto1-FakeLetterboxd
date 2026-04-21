@@ -15,17 +15,20 @@ from django.contrib import messages
 
 class AvaliacaoListView(View):
     def get(self, request, *args, **kwargs):
-            avaliacoes = Avaliacao.objects.all()
-
-            contexto = {
-                'avaliacoes': avaliacoes
-            }
-
-            return render(
-                request,
-                'main/listaAvaliacao.html',
-                contexto
-            )
+        # Começa com todas as avaliações ordenadas por data
+        avaliacoes = Avaliacao.objects.all().order_by('-dt_avaliacao')
+        
+        # FILTRO: Busca por título
+        busca_titulo = request.GET.get('busca_titulo', '').strip()
+        if busca_titulo:
+            avaliacoes = avaliacoes.filter(midia__titulo__icontains=busca_titulo)
+        
+        contexto = {
+            'avaliacoes': avaliacoes,
+            'busca_titulo': busca_titulo,
+        }
+ 
+        return render(request, 'main/listaAvaliacao.html', contexto)
 
 
 class MidiaListView(View):

@@ -5,13 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista Avaliações</title>
-    <link rel="stylesheet" href="{% static 'main/css/listaAvaliacao.css' %}"> 
+    <link rel="stylesheet" href="{% static 'main/css/listaAvaliacao.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/filtroBusca.css' %}">
 </head>
 <body>
     {% include 'main/links.html' %}
     
+    {% for message in messages %}
+        <div class="mensagens {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    
     <h1>Lista de Avaliações</h1>
     
+    <!-- Barra de Busca -->
+    <div class="busca-container">
+        <form method="get" class="busca-form">
+            <input 
+                type="text" 
+                name="busca_titulo" 
+                placeholder="Buscar por título do filme ou série..."
+                value="{{ busca_titulo }}"
+                class="busca-input"
+            >
+            <button type="submit" class="btn-buscar">Buscar</button>
+            {% if busca_titulo %}
+                <a href="{% url 'main:lista-avaliacao' %}" class="btn-limpar">✕</a>
+            {% endif %}
+        </form>
+        
+        {% if busca_titulo %}
+            <div class="busca-info">
+                Buscando por: <strong>"{{ busca_titulo }}"</strong> • {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Grid de Avaliações -->
     <div class="avaliacoes-grid">
         {% for avaliacao in avaliacoes %}
         <article class="avaliacao-card">
@@ -33,9 +64,16 @@
         </article>
         {% empty %}
         <div class="empty-state">
-            <p>Ainda não há avaliações cadastradas</p>
+            {% if busca_titulo %}
+                <p>😔 Nenhuma avaliação encontrada para "{{ busca_titulo }}"</p>
+                <a href="{% url 'main:lista-avaliacao' %}" class="btn-voltar">Ver todas as avaliações</a>
+            {% else %}
+                <p>Ainda não há avaliações cadastradas</p>
+            {% endif %}
         </div>
         {% endfor %}
     </div>
+
+    <script src="{% static 'main/js/mensagens.js' %}"></script>
 </body>
 </html>
