@@ -143,7 +143,7 @@
                     </div>
                 {% endif %}
             </div>
-
+            {% if avaliacao.pessoa == request.user %}
             <div class="acoes-detalhe">
                 <a href="{% url 'main:atualiza-avaliacao' pk=avaliacao.id %}" class="btn btn-editar">
                     Editar Avaliação
@@ -152,6 +152,7 @@
                     Excluir Avaliação
                 </a>
             </div>
+            {% endif %}
         </div>
     </div>
 
