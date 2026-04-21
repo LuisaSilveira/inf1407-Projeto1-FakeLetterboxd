@@ -3,7 +3,6 @@ from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 
 from main.forms import AvaliacaoModel2Form, PessoaModel2Form
 from main.models import Midia, Avaliacao, Pessoa
@@ -16,7 +15,6 @@ from django.contrib import messages
 # Create your views here.
 
 class AvaliacaoListView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request, *args, **kwargs):
         
         avaliacoes = Avaliacao.objects.all()
@@ -60,7 +58,6 @@ class AvaliacaoListView(LoginRequiredMixin, View):
 
 
 class MidiaListView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request, *args, **kwargs):
         midias = Midia.objects.all()
 
@@ -76,14 +73,12 @@ class MidiaListView(LoginRequiredMixin, View):
 
 
 class PessoaCreateView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request):
         contexto = {
             'formulario': PessoaModel2Form(),
         }
         return render(request, 'main/formulario.html', contexto)
 
-    @login_required
     def post(self, request, *args, **kwargs):
         formulario = PessoaModel2Form(request.POST)
         if formulario.is_valid():
@@ -97,7 +92,6 @@ class PessoaCreateView(LoginRequiredMixin, View):
 
 
 class AvaliacaoCreateView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request):
         termo_busca = request.GET.get('busca_midia', '')
         midias_encontradas = []
@@ -137,7 +131,6 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
         }
         return render(request, 'main/criaAvaliacao.html', contexto)
 
-    @login_required
     def post(self, request):
         formulario = AvaliacaoModel2Form(request.POST)
         midia_id = request.POST.get('midia_id')
@@ -161,7 +154,6 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
         return render(request, 'main/criaAvaliacao.html', contexto)
 
 class AvaliacaoUpdateView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
         formulario = AvaliacaoModel2Form(instance=avaliacao)
@@ -202,7 +194,6 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
         }
         return render(request, 'main/atualizaAvaliacao.html', contexto)
 
-    @login_required
     def post(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
         formulario = AvaliacaoModel2Form(request.POST, instance=avaliacao)
@@ -240,12 +231,10 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
             return render(request, 'main/atualizaAvaliacao.html', contexto)
 
 class AvaliacaoDeleteView(LoginRequiredMixin, View):
-    @login_required
     def get(self, request, pk, *args, **kwargs):
         avaliacao = Avaliacao.objects.get(pk=pk)
         contexto = { 'avaliacao': avaliacao, }
         return render(request, 'main/apagaAvaliacao.html', contexto)
-    @login_required
     def post(self, request, pk, *args, **kwargs):
         avaliacao = Avaliacao.objects.get(pk=pk)
         avaliacao.delete()
@@ -254,7 +243,6 @@ class AvaliacaoDeleteView(LoginRequiredMixin, View):
 
 class AvaliacaoDetailView(LoginRequiredMixin, View):
     """View para exibir detalhes completos de uma avaliação"""
-    @login_required
     def get(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
         

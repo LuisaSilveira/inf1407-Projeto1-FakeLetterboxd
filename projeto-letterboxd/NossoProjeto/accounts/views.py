@@ -7,7 +7,7 @@ def cadastro(request):
         formulario = CustomUsuarioCreationForm(request.POST)
         if formulario.is_valid():
             formulario.save()
-            return redirect('home')
+            return redirect('main:lista-avaliacao')
     else:
         formulario = CustomUsuarioCreationForm()
     contexto = {'form': formulario, }
