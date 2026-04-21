@@ -101,7 +101,7 @@
                     <div class="avaliador">
                         <span class="label">Avaliado por</span>
                          <a href="{% url 'main:perfil-pessoa' pk=avaliacao.pessoa.id %}" class="pessoa-nome pessoa-link">
-                        {{ avaliacao.pessoa }}
+                        {{ avaliacao.pessoa.username }}
                         </a>
                     </div>
                     

@@ -131,7 +131,7 @@
             <div class="card-content">
                 <div class="card-header">
                     <a href="{% url 'main:perfil-pessoa' pk=avaliacao.pessoa.id %}" class="pessoa-nome pessoa-link">
-                        {{ avaliacao.pessoa }}
+                        {{ avaliacao.pessoa.username }}
                     </a>
                     <div class="nota-container">
                         <span class="nota">{{ avaliacao.nota }}</span>

@@ -116,15 +116,6 @@
                     </ul>
                 {% endif %}
 
-                <div class="campo">
-                    {{ formulario.pessoa.label_tag }}
-                    {{ formulario.pessoa }}
-                    {{ formulario.pessoa.errors }}
-                    {% if formulario.pessoa.help_text %}
-                        <small class="helptext">{{ formulario.pessoa.help_text }}</small>
-                    {% endif %}
-                </div>
-
                 <div class="linha-dupla">
                     <div class="campo">
                         {{ formulario.nota.label_tag }}

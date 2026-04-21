@@ -1,23 +1,6 @@
+from django.conf import settings
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-
-class Pessoa(models.Model):
-    id = models.AutoField(primary_key=True)
-    nome = models.CharField(
-    max_length=100, help_text='Entre o nome')
-    idade = models.IntegerField(help_text='Entre a idade')
-    email = models.EmailField(
-    help_text='Informe o email', max_length=254)
-    telefone = models.CharField(
-    help_text='Telefone com DDD e DDI', max_length=20)
-    dtNasc = models.DateField(
-    help_text='Nascimento no formato DD/MM/AAAA',
-    verbose_name='Data de nascimento')
-    foto_perfil = models.ImageField(upload_to='perfis/', null=True, blank=True)
-    bio = models.TextField(blank=True)
-
-    def __str__(self):
-        return self.nome
 
 
 class Midia(models.Model):
@@ -68,7 +51,7 @@ class Midia(models.Model):
 
 
 class Avaliacao(models.Model):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, related_name='avaliacoes')
+    pessoa = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='avaliacoes')
     midia = models.ForeignKey(Midia, on_delete=models.CASCADE, related_name='avaliacoes')
     nota = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)]
@@ -79,4 +62,4 @@ class Avaliacao(models.Model):
     assistido_em = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.pessoa.nome} → {self.midia.titulo}: {self.nota}★'
+        return f'{self.pessoa.username} → {self.midia.titulo}: {self.nota}★'

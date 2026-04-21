@@ -119,15 +119,6 @@
                 </ul>
             {% endif %}
 
-            <div class="campo">
-                {{ avaliacao.pessoa.label_tag }}
-                {{ avaliacao.pessoa }}
-                {{ avaliacao.pessoa.errors }}
-                {% if avaliacao.pessoa.help_text %}
-                    <small class="helptext">{{ avaliacao.pessoa.help_text }}</small>
-                {% endif %}
-            </div>
-
             <div class="linha-dupla">
                 <div class="campo">
                     {{ avaliacao.nota.label_tag }}

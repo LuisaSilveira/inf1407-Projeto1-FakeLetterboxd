@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Avaliacoes de {{ pessoa.nome }}</title>
+	<title>Avaliacoes de {{ pessoa.username }}</title>
 	<link rel="stylesheet" href="{% static 'main/css/perfil.css' %}">
 	<link rel="stylesheet" href="{% static 'main/css/filtroBusca.css' %}">
 	<link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
@@ -15,21 +15,21 @@
 	<section class="perfil-resumo">
 		<div class="perfil-resumo-foto-wrap">
 			{% if pessoa.foto_perfil %}
-				<img class="perfil-resumo-foto" src="{{ pessoa.foto_perfil.url }}" alt="Foto de {{ pessoa.nome }}">
+				<img class="perfil-resumo-foto" src="{{ pessoa.foto_perfil.url }}" alt="Foto de {{ pessoa.username }}">
 			{% else %}
-				<img class="perfil-resumo-foto" src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de {{ pessoa.nome }}">
+				<img class="perfil-resumo-foto" src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de {{ pessoa.username }}">
 			{% endif %}
 		</div>
 
 		<div class="perfil-resumo-info">
-			<h2 class="perfil-resumo-nome">{{ pessoa.nome }}</h2>
+			<h2 class="perfil-resumo-nome">{{ pessoa.username }}</h2>
 
 			<div class="perfil-resumo-meta">
 				{% if pessoa.email %}
 					<span>{{ pessoa.email }}</span>
 				{% endif %}
-				{% if pessoa.dtNasc %}
-					<span>Nascimento: {{ pessoa.dtNasc|date:"d/m/Y" }}</span>
+				{% if pessoa.data_nascimento %}
+					<span>Nascimento: {{ pessoa.data_nascimento|date:"d/m/Y" }}</span>
 				{% endif %}
 			</div>
 
@@ -136,7 +136,7 @@
 
 			<div class="card-content">
 				<div class="card-header">
-					<span class="pessoa-nome">{{ pessoa.nome }}</span>
+					<span class="pessoa-nome">{{ pessoa.username }}</span>
 					<div class="nota-container">
 						<span class="nota">{{ avaliacao.nota }}</span>
 					</div>

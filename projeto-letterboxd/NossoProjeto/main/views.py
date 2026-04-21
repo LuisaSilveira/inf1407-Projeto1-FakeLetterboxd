@@ -4,8 +4,9 @@ from django.urls.base import reverse_lazy
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin   
 
-from main.forms import AvaliacaoModel2Form, PessoaModel2Form
-from main.models import Midia, Avaliacao, Pessoa
+from django.contrib.auth import get_user_model
+from main.forms import AvaliacaoModel2Form
+from main.models import Midia, Avaliacao
 from main.services.omdb_service import OMDBService
 from django.contrib import messages
 
@@ -33,7 +34,7 @@ class AvaliacaoListView(LoginRequiredMixin, View):
         #filtro de busca por pessoa/usuário
         busca_pessoa = request.GET.get('busca_pessoa', '').strip()
         if busca_pessoa:
-            avaliacoes = avaliacoes.filter(pessoa__nome__icontains=busca_pessoa)
+            avaliacoes = avaliacoes.filter(pessoa__username__icontains=busca_pessoa)
 
         # filtro por nota (maior para menor ou menor para maior)
         ordem_nota = request.GET.get('ordem_nota', '')
@@ -113,6 +114,7 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
                 midia = Midia.objects.get(id=midia_id)
                 avaliacao = formulario.save(commit=False)
                 avaliacao.midia = midia
+                avaliacao.pessoa = request.user
                 avaliacao.save()
                 return HttpResponseRedirect(reverse_lazy('main:lista-avaliacao'))
             except Midia.DoesNotExist:
@@ -198,6 +200,7 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
                     }
                     return render(request, 'main/atualizaAvaliacao.html', contexto)
 
+            avaliacao_editada.pessoa = request.user
             avaliacao_editada.save()
             return HttpResponseRedirect(reverse_lazy("main:lista-avaliacao"))
         else:
@@ -237,7 +240,7 @@ class AvaliacaoDetailView(LoginRequiredMixin, View):
 
 class PessoaProfileView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
-        pessoa = get_object_or_404(Pessoa, pk=pk)
+        pessoa = get_object_or_404(get_user_model(), pk=pk)
 
         avaliacoes = pessoa.avaliacoes.select_related('midia')
 
