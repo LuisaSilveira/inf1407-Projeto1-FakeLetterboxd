@@ -131,6 +131,8 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'main:lista-avaliacao'
 LOGOUT_URL = 'home'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
