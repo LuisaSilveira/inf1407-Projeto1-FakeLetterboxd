@@ -3,6 +3,8 @@ from django.urls import path, reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView
+from accounts.views import MeuUpdateView
+from accounts.models import CustomUser
 
 
 app_name = 'accounts'
@@ -10,6 +12,9 @@ app_name = 'accounts'
 urlpatterns = [
     path('cadastro/', views.cadastro, name='cadastro'),
     path('perfil/', views.perfil, name='perfil'),
+    path('perfil/update/<int:pk>/', MeuUpdateView.as_view(template_name='accounts/perfil_update.html',
+                                                          success_url=reverse_lazy('accounts:perfil'),
+                                                          model = CustomUser), name='perfil-update'),
     path('login/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', LogoutView.as_view(next_page='portal:home'), name='logout'),
     path('password_reset/', PasswordResetView.as_view(template_name='accounts/password_reset_form.html', 

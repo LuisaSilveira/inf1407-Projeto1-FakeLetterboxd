@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/css/forms.css' %}">
+    <title>Editar perfil — FakeLetterboxd</title>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'accounts:perfil' %}" class="logo">FakeLetterboxd</a>
+    </header>
+
+    <div class="form-wrapper">
+        <div class="form-card">
+            <h1>Editar perfil</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Foto de perfil (primeiro campo) -->
+                <p>
+                    <label>{{ form.foto_perfil.label }}</label>
+                    <div class="foto-row">
+                        <div class="foto-preview">
+                            {% if form.instance.foto_perfil and form.instance.foto_perfil.name != 'static/accounts/img/padrao.png' %}
+                                <img src="{{ form.instance.foto_perfil.url }}" alt="Foto atual" width="52" height="52">
+                            {% else %}
+                                <img src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto atual" width="52" height="52">
+                            {% endif %}
+                        </div>
+                        <div class="foto-input-wrapper">
+                            {{ form.foto_perfil }}
+                            {% if form.foto_perfil.errors %}
+                                <ul class="errorlist">{% for e in form.foto_perfil.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </p>
+
+                <!-- E-mail -->
+                <p>
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <ul class="errorlist">{% for e in form.email.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                    {% endif %}
+                </p>
+
+                <!-- Data de nascimento -->
+                <p>
+                    <label for="{{ form.data_nascimento.id_for_label }}">{{ form.data_nascimento.label }}</label>
+                    {{ form.data_nascimento }}
+                    {% if form.data_nascimento.errors %}
+                        <ul class="errorlist">{% for e in form.data_nascimento.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                    {% endif %}
+                </p>
+
+                <!-- Bio -->
+                <p>
+                    <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+                    {{ form.bio }}
+                    {% if form.bio.errors %}
+                        <ul class="errorlist">{% for e in form.bio.errors %}<li>{{ e }}</li>{% endfor %}</ul>
+                    {% endif %}
+                </p>
+
+                <button type="submit" class="btn-submit">Salvar alterações</button>
+            </form>
+            <div class="form-footer">
+                <p><a href="{% url 'accounts:perfil' %}">Cancelar</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

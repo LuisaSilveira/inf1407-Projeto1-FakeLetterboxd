@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import CustomUsuarioCreationForm
+from .forms import CustomUsuarioCreationForm, CustomUserUpdateForm
+from django.views.generic.edit import UpdateView
 
 @login_required(login_url='accounts:login')
 def perfil(request):
@@ -16,3 +17,13 @@ def cadastro(request):
         formulario = CustomUsuarioCreationForm()
     contexto = {'form': formulario, }
     return render(request,'accounts/cadastro.html', contexto)
+
+
+class MeuUpdateView(UpdateView):
+    form_class = CustomUserUpdateForm
+
+    def get(self, request, pk, *args, **kwargs):
+        if request.user.id == pk:
+            return super().get(request, pk, *args, **kwargs)
+        else:
+            return redirect('main:lista-avaliacao')

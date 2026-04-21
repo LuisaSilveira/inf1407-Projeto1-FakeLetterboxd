@@ -37,3 +37,23 @@ class CustomUsuarioCreationForm(UserCreationForm):
 
         self.fields['password2'].label = 'Confirmar senha'
         self.fields['password2'].help_text = 'Digite a mesma senha novamente para confirmação.'
+
+
+class CustomUserUpdateForm(forms.ModelForm):
+    data_nascimento = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=False,
+        label='Data de nascimento',
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'data_nascimento', 'bio', 'foto_perfil']
+        labels = {
+            'email': 'E-mail',
+            'bio': 'Bio',
+            'foto_perfil': 'Foto de perfil',
+        }
+        widgets = {
+            'foto_perfil': forms.FileInput(),
+        }

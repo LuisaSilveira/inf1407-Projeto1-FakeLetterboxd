@@ -51,8 +51,30 @@ body {
 /* Conteúdo */
 .perfil-container {
     display: flex;
+    align-items: flex-start;
     justify-content: center;
+    gap: 1rem;
     padding: 3rem 2rem;
+}
+
+.btn-editar {
+    background: transparent;
+    color: #00e054;
+    border: 2px solid #00e054;
+    border-radius: 4px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 0.25rem;
+}
+
+.btn-editar:hover {
+    background: #00e054;
+    color: #14181c;
 }
 
 .perfil-card {
@@ -74,20 +96,6 @@ body {
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #456;
-}
-
-.avatar-placeholder {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: #2c3440;
-    border: 3px solid #456;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #00e054;
 }
 
 /* Informações */

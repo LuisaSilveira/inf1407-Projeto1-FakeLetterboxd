@@ -27,12 +27,13 @@
     </div>
 
     <main class="perfil-container">
+        <a href="{% url 'accounts:perfil-update' pk=user.id %}" class="btn-editar">Editar perfil</a>
         <div class="perfil-card">
             <div class="perfil-avatar">
-                {% if user.foto_perfil %}
+                {% if user.foto_perfil and user.foto_perfil.name != 'static/accounts/img/padrao.png' %}
                     <img src="{{ user.foto_perfil.url }}" alt="Foto de perfil">
                 {% else %}
-                    <div class="avatar-placeholder">{{ user.username|first|upper }}</div>
+                    <img src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de perfil">
                 {% endif %}
             </div>
             <div class="perfil-info">
