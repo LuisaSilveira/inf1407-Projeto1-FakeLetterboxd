@@ -18,21 +18,8 @@ O **FakeLetterboxd** é uma aplicação web inspirada no Letterboxd, voltada par
 - **Criação de avaliação** — busca a mídia via OMDB, seleciona o título e preenche nota (0 a 5), comentário e data em que assistiu.
 - **Lista de avaliações** — exibe todas as avaliações da plataforma em cards com pôster, filtros por título, usuário, tipo de mídia (filme/série) e gênero, além de ordenação por nota.
 - **Detalhe de avaliação** — página completa com todas as informações da mídia e da avaliação.
-- **Edição e exclusão de avaliação** — disponíveis apenas para o autor da avaliação, tanto na lista quanto na página de detalhe (protegido também no backend com erro 403 para acesso direto via URL).
+- **Edição e exclusão de avaliação** — disponíveis apenas para o autor da avaliação, tanto na lista quanto na página de detalhe.
 - **Perfil público de outros usuários** — visualização das avaliações de qualquer usuário da plataforma.
-
----
-
-## Tecnologias utilizadas
-
-| Tecnologia | Versão |
-|---|---|
-| Python | 3.x |
-| Django | 6.x |
-| Pillow | — |
-| Requests | — |
-| python-decouple | — |
-| API OMDB | — |
 
 ---
 
@@ -89,6 +76,7 @@ Após o login, você acessa a lista geral de avaliações de todos os usuários.
 - Ordenar por **maior ou menor nota**.
 
 Clique em qualquer card para ver os **detalhes completos** da avaliação.
+Clique no nome do usuário que fez a avaliação para ver seu perfil (contém o detalhamento das informações do usuário, as avaliações que ele fez e os filtros)
 
 ### 5. Criar uma avaliação
 Clique em **"Nova Avaliação"** na barra de navegação.
@@ -101,7 +89,7 @@ Clique em **"Nova Avaliação"** na barra de navegação.
 Os botões **"Editar"** e **"Excluir"** aparecem apenas nas avaliações que você mesmo criou, tanto na lista quanto na página de detalhe. Apenas o autor pode realizar essas ações.
 
 ### 7. Perfil
-Clique no seu nome de usuário na barra de navegação para acessar seu perfil. Lá você vê:
+Clique em **Perfil** na barra de navegação para acessar seu perfil. Lá você vê:
 - Sua foto, bio e data de nascimento.
 - Todas as suas avaliações com filtros.
 
@@ -109,6 +97,10 @@ Para editar as informações do perfil, clique em **"Editar perfil"**.
 
 Você também pode clicar no nome de outro usuário em qualquer avaliação para ver o perfil público dele.
 
+Para fazer o Logout do site clique em  **"Sair"**
+
+### OBS
+Para voltar para a página de listar avaliação, basta clicar no **"FakeLetterboxd"** em qualquer página do site após o login.
 ---
 
 ## O que funcionou
@@ -119,6 +111,6 @@ Você também pode clicar no nome de outro usuário em qualquer avaliação para
 - Criação de avaliação com seleção de mídia da OMDB e preenchimento de nota (0 a 5), comentário e data em que assistiu.
 - Listagem de avaliações com filtros por título, usuário, tipo, gênero e ordenação por nota.
 - Página de detalhe da avaliação com informações completas da mídia.
-- Edição e exclusão de avaliação restritas ao autor (proteção no frontend e no backend).
+- Edição e exclusão de avaliação restritas ao autor.
 - Perfil público de outros usuários com suas avaliações e filtros.
 
