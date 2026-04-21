@@ -39,6 +39,12 @@ h1 {
     border: 1px solid #456;
     transition: all 0.3s ease;
     position: relative;
+    /* CORREÇÃO: Garante que o conteúdo não ultrapasse o card */
+    overflow: hidden;
+    /* ADICIONADO: Flexbox para empurrar botões para o final */
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 .avaliacao-card:hover {
@@ -61,12 +67,17 @@ h1 {
     color: #fff;
     font-weight: 600;
     font-size: 0.95rem;
+    /* CORREÇÃO: Quebra nomes longos também */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 70%;
 }
 
 .nota-container {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .nota {
@@ -85,22 +96,56 @@ h1 {
     font-weight: 600;
     margin-bottom: 1rem;
     line-height: 1.3;
+    /* CORREÇÃO: Quebra títulos longos */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
-/* Comentário */
+/* Comentário - CORREÇÃO PRINCIPAL DO BUG */
 .comentario {
     color: #9ab;
     font-size: 0.95rem;
     line-height: 1.6;
     margin-bottom: 1rem;
-    min-height: 3rem;
+    /* ADICIONADO: Propriedades para quebrar texto longo */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    /* ADICIONADO: Altura máxima com scroll */
+    max-height: 120px;
+    overflow-y: auto;
+    /* ADICIONADO: Garante que o texto não ultrapasse */
+    max-width: 100%;
+    white-space: pre-wrap; /* Preserva quebras de linha do usuário */
+    /* ADICIONADO: Padding para não sobrepor o scroll */
+    padding-right: 8px;
+}
+
+/* Estilização personalizada do scroll */
+.comentario::-webkit-scrollbar {
+    width: 6px;
+}
+
+.comentario::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.comentario::-webkit-scrollbar-thumb {
+    background: #456;
+    border-radius: 3px;
+}
+
+.comentario::-webkit-scrollbar-thumb:hover {
+    background: #567;
 }
 
 /* Ações */
 .card-actions {
     display: flex;
     gap: 0.75rem;
-    margin-top: 1rem;
+    margin-top: auto; /* ADICIONADO: Empurra os botões para o final */
     padding-top: 0.75rem;
     border-top: 1px solid #456;
 }
@@ -143,7 +188,7 @@ h1 {
 .empty-state {
     text-align: center;
     padding: 4rem 2rem;
-    color: #678;;
+    color: #678;
     grid-column: 1 / -1;
 }
 
