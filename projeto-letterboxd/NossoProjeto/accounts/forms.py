@@ -1,6 +1,6 @@
 # accounts/forms.py
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
 from .models import CustomUser
 
 class CustomUsuarioCreationForm(UserCreationForm):
@@ -37,6 +37,18 @@ class CustomUsuarioCreationForm(UserCreationForm):
 
         self.fields['password2'].label = 'Confirmar senha'
         self.fields['password2'].help_text = 'Digite a mesma senha novamente para confirmação.'
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['new_password1'].label = 'Nova senha'
+        self.fields['new_password1'].help_text = (
+            'A senha deve ter pelo menos 8 caracteres e não pode ser '
+            'muito parecida com seus outros dados ou uma senha muito comum.'
+        )
+        self.fields['new_password2'].label = 'Confirmar nova senha'
+        self.fields['new_password2'].help_text = 'Digite a mesma senha novamente para confirmação.'
 
 
 class CustomUserUpdateForm(forms.ModelForm):

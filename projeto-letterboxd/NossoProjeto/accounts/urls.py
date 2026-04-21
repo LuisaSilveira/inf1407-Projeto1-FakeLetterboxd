@@ -5,6 +5,7 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView
 from accounts.views import MeuUpdateView
 from accounts.models import CustomUser
+from accounts.forms import CustomSetPasswordForm
 
 
 app_name = 'accounts'
@@ -24,6 +25,6 @@ urlpatterns = [
                                                     subject_template_name='accounts/password_reset_subject.txt',
                                                     from_email = 'rafaribeiro2013@gmail.com'), name='password_reset'),
     path('password_reset_sent/', PasswordResetDoneView.as_view(template_name='accounts/password_reset_sent.html'), name='password_reset_sent'),
-    path('password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html', success_url=reverse_lazy('accounts:password_reset_complete')), name='password_reset_confirm'),
+    path('password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html', form_class=CustomSetPasswordForm, success_url=reverse_lazy('accounts:password_reset_complete')), name='password_reset_confirm'),
     path('password_reset_complete/', PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html'), name='password_reset_complete'),
 ]
