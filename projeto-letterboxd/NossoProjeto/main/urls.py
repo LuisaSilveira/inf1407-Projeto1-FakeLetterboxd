@@ -14,5 +14,7 @@ urlpatterns = [
  name='apaga-avaliacao'),
  path('avaliacao/<int:pk>/', views.AvaliacaoDetailView.as_view(), 
  name='detalhe-avaliacao'),
+ path('perfil/<int:pk>/', views.PessoaProfileView.as_view(),
+ name='perfil-pessoa'),
 
 ]

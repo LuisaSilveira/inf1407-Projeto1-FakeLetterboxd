@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Avaliacoes de {{ pessoa.nome }}</title>
+	<link rel="stylesheet" href="{% static 'main/css/perfil.css' %}">
+	<link rel="stylesheet" href="{% static 'main/css/filtroBusca.css' %}">
+	<link rel="stylesheet" href="{% static 'main/css/navbar.css' %}">
+</head>
+<body>
+	<nav class="main-nav">{% include 'main/links.html' %}</nav>
+
+	<section class="perfil-resumo">
+		<div class="perfil-resumo-foto-wrap">
+			{% if pessoa.foto_perfil %}
+				<img class="perfil-resumo-foto" src="{{ pessoa.foto_perfil.url }}" alt="Foto de {{ pessoa.nome }}">
+			{% else %}
+				<img class="perfil-resumo-foto" src="{% static 'accounts/img/placeholder-profile-icon.png' %}" alt="Foto de {{ pessoa.nome }}">
+			{% endif %}
+		</div>
+
+		<div class="perfil-resumo-info">
+			<h2 class="perfil-resumo-nome">{{ pessoa.nome }}</h2>
+
+			<div class="perfil-resumo-meta">
+				{% if pessoa.email %}
+					<span>{{ pessoa.email }}</span>
+				{% endif %}
+				{% if pessoa.dtNasc %}
+					<span>Nascimento: {{ pessoa.dtNasc|date:"d/m/Y" }}</span>
+				{% endif %}
+			</div>
+
+			{% if pessoa.bio %}
+				<p class="perfil-resumo-bio">{{ pessoa.bio }}</p>
+			{% else %}
+				<p class="perfil-resumo-bio">Sem bio cadastrada.</p>
+			{% endif %}
+		</div>
+	</section>
+
+	{% for message in messages %}
+		<div class="mensagens {{ message.tags }}">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	<div class="busca-container">
+		<form method="get" class="busca-form">
+			<input
+				type="text"
+				name="busca_titulo"
+				placeholder="Buscar por titulo..."
+				value="{{ busca_titulo }}"
+				class="busca-input"
+			>
+
+			<select name="tipo_midia" class="filtro-select">
+				<option value="">Tipo: Todos</option>
+				<option value="filme" {% if tipo_midia == 'filme' %}selected{% endif %}>
+					Filmes
+				</option>
+				<option value="serie" {% if tipo_midia == 'serie' %}selected{% endif %}>
+					Series
+				</option>
+			</select>
+
+			<select name="genero_midia" class="filtro-select">
+				<option value="">Genero: Todos</option>
+				{% for genero, label in generos_choices %}
+					<option value="{{ genero }}" {% if genero_midia == genero %}selected{% endif %}>
+						{{ label }}
+					</option>
+				{% endfor %}
+			</select>
+
+			<select name="ordem_nota" class="filtro-select">
+				<option value="">Ordenar por</option>
+				<option value="maior" {% if ordem_nota == 'maior' %}selected{% endif %}>
+					Maior Nota
+				</option>
+				<option value="menor" {% if ordem_nota == 'menor' %}selected{% endif %}>
+					Menor Nota
+				</option>
+			</select>
+
+			<button type="submit" class="btn-buscar">Filtrar</button>
+
+			{% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+				<a href="{% url 'main:perfil-pessoa' pk=pessoa.id %}" class="btn-limpar">Limpar</a>
+			{% endif %}
+		</form>
+
+		{% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+			<div class="busca-info">
+				{% if busca_titulo %}
+					Titulo: <strong>"{{ busca_titulo }}"</strong>
+				{% endif %}
+
+				{% if tipo_midia %}
+					{% if busca_titulo %} • {% endif %}
+					Tipo: <strong>{% if tipo_midia == 'filme' %}Filmes{% else %}Series{% endif %}</strong>
+				{% endif %}
+
+				{% if genero_midia %}
+					{% if busca_titulo or tipo_midia %} • {% endif %}
+					Genero: <strong>
+						{% for genero, label in generos_choices %}
+							{% if genero == genero_midia %}{{ label }}{% endif %}
+						{% endfor %}
+					</strong>
+				{% endif %}
+
+				{% if ordem_nota %}
+					{% if busca_titulo or tipo_midia or genero_midia %} • {% endif %}
+					Ordem: <strong>{% if ordem_nota == 'maior' %}Maior Nota{% else %}Menor Nota{% endif %}</strong>
+				{% endif %}
+
+				• {{ avaliacoes|length }} resultado{{ avaliacoes|length|pluralize }}
+			</div>
+		{% endif %}
+	</div>
+
+	<div class="avaliacoes-grid">
+		{% for avaliacao in avaliacoes %}
+		<article class="avaliacao-card">
+			{% if avaliacao.midia.poster_url %}
+				<div class="poster-container">
+					<a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}">
+						<img src="{{ avaliacao.midia.poster_url }}" alt="{{ avaliacao.midia.titulo }}" class="midia-poster">
+					</a>
+				</div>
+			{% endif %}
+
+			<div class="card-content">
+				<div class="card-header">
+					<span class="pessoa-nome">{{ pessoa.nome }}</span>
+					<div class="nota-container">
+						<span class="nota">{{ avaliacao.nota }}</span>
+					</div>
+				</div>
+
+				<h2 class="midia-titulo">
+					<a href="{% url 'main:detalhe-avaliacao' pk=avaliacao.id %}">{{ avaliacao.midia }}</a>
+				</h2>
+
+				{% if avaliacao.assistido_em %}
+					<div class="assistido-em">
+						Assistido em {{ avaliacao.assistido_em|date:"d/m/Y" }}
+					</div>
+				{% endif %}
+
+				<p class="comentario">{{ avaliacao.comentario|default:"Sem comentario" }}</p>
+
+	
+			</div>
+		</article>
+		{% empty %}
+		<div class="empty-state">
+			{% if busca_titulo or tipo_midia or genero_midia or ordem_nota %}
+				<p>Nenhuma avaliacao encontrada com os filtros aplicados</p>
+				<a href="{% url 'main:perfil-pessoa' pk=pessoa.id %}" class="btn-voltar">Ver todas as avaliacoes</a>
+			{% else %}
+				<p>Essa pessoa ainda nao tem avaliacoes cadastradas</p>
+			{% endif %}
+		</div>
+		{% endfor %}
+	</div>
+</body>
+</html>

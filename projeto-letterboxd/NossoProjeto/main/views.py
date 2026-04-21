@@ -233,3 +233,41 @@ class AvaliacaoDetailView(LoginRequiredMixin, View):
             'avaliacao': avaliacao,
         }
         return render(request, 'main/detalheAvaliacao.html', contexto)
+
+
+class PessoaProfileView(LoginRequiredMixin, View):
+    def get(self, request, pk, *args, **kwargs):
+        pessoa = get_object_or_404(Pessoa, pk=pk)
+
+        avaliacoes = pessoa.avaliacoes.select_related('midia')
+
+        busca_titulo = request.GET.get('busca_titulo', '').strip()
+        if busca_titulo:
+            avaliacoes = avaliacoes.filter(midia__titulo__icontains=busca_titulo)
+
+        tipo_midia = request.GET.get('tipo_midia', '')
+        if tipo_midia:
+            avaliacoes = avaliacoes.filter(midia__tipo=tipo_midia)
+
+        genero_midia = request.GET.get('genero_midia', '')
+        if genero_midia:
+            avaliacoes = avaliacoes.filter(midia__generos=genero_midia)
+
+        ordem_nota = request.GET.get('ordem_nota', '')
+        if ordem_nota == 'maior':
+            avaliacoes = avaliacoes.order_by('-nota', '-dt_avaliacao')
+        elif ordem_nota == 'menor':
+            avaliacoes = avaliacoes.order_by('nota', '-dt_avaliacao')
+        else:
+            avaliacoes = avaliacoes.order_by('-dt_avaliacao')
+
+        contexto = {
+            'pessoa': pessoa,
+            'avaliacoes': avaliacoes,
+            'busca_titulo': busca_titulo,
+            'tipo_midia': tipo_midia,
+            'genero_midia': genero_midia,
+            'ordem_nota': ordem_nota,
+            'generos_choices': Midia.GENERO_CHOICES,
+        }
+        return render(request, 'main/perfil.html', contexto)
