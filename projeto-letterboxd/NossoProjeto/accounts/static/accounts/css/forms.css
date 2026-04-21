@@ -139,12 +139,16 @@ body {
 
 .foto-input-wrapper {
     flex: 1;
+    min-width: 0;
 }
 
 /* File input */
 .form-card input[type="file"] {
     color: #9ab;
     font-size: 0.9rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 .form-card input[type="file"]::file-selector-button {
