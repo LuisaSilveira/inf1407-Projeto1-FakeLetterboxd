@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http.response import HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from django.views.generic.base import View
-from django.contrib.auth.mixins import LoginRequiredMixin   
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 from django.contrib.auth import get_user_model
 from main.forms import AvaliacaoModel2Form
@@ -132,6 +133,8 @@ class AvaliacaoCreateView(LoginRequiredMixin, View):
 class AvaliacaoUpdateView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
+        if avaliacao.pessoa != request.user:
+            raise PermissionDenied
         formulario = AvaliacaoModel2Form(instance=avaliacao)
 
         termo_busca = request.GET.get('busca_midia', '')
@@ -179,6 +182,8 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
 
     def post(self, request, pk, *args, **kwargs):
         avaliacao = get_object_or_404(Avaliacao, pk=pk)
+        if avaliacao.pessoa != request.user:
+            raise PermissionDenied
         formulario = AvaliacaoModel2Form(request.POST, instance=avaliacao)
         midia_id = request.POST.get('midia_id')
 
@@ -217,12 +222,16 @@ class AvaliacaoUpdateView(LoginRequiredMixin, View):
 
 class AvaliacaoDeleteView(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
-        avaliacao = Avaliacao.objects.get(pk=pk)
+        avaliacao = get_object_or_404(Avaliacao, pk=pk)
+        if avaliacao.pessoa != request.user:
+            raise PermissionDenied
         contexto = { 'avaliacao': avaliacao, }
         return render(request, 'main/apagaAvaliacao.html', contexto)
     
     def post(self, request, pk, *args, **kwargs):
-        avaliacao = Avaliacao.objects.get(pk=pk)
+        avaliacao = get_object_or_404(Avaliacao, pk=pk)
+        if avaliacao.pessoa != request.user:
+            raise PermissionDenied
         avaliacao.delete()
         return HttpResponseRedirect(reverse_lazy("main:lista-avaliacao"))
 
