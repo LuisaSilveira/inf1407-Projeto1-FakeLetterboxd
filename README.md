@@ -42,6 +42,8 @@ pip install -r requirements.txt
 
 # 3. Crie o arquivo .env na raiz de NossoProjeto/ com o conteúdo:
 #    OMDB_API_KEY=sua_chave_aqui
+#    EMAIL_HOST_USER=seu_email_aqui
+#    EMAIL_HOST_PASSWORD=sua_senha_aqui
 
 # 4. Aplique as migrações
 cd NossoProjeto
