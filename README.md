@@ -15,7 +15,7 @@ O **FakeLetterboxd** é uma aplicação web inspirada no Letterboxd, voltada par
 - **Cadastro e autenticação de usuários** — registro de nova conta, login, logout e recuperação de senha por e-mail.
 - **Perfil do usuário** — página com foto de perfil, bio, data de nascimento e histórico de avaliações do próprio usuário; edição dos dados do perfil.
 - **Integração com a API OMDB** — busca de filmes e séries por título diretamente na API externa, com importação automática de pôster, sinopse, diretor, elenco, duração, idioma, país, classificação indicativa e número de temporadas.
-- **Criação de avaliação** — busca a mídia via OMDB, seleciona o título e preenche nota (0 a 5), comentário e data em que assistiu.
+- **Criação de avaliação** — busca a mídia via OMDB, seleciona o título e preenche nota (1 a 5), comentário e data em que assistiu.
 - **Lista de avaliações** — exibe todas as avaliações da plataforma em cards com pôster, filtros por título, usuário, tipo de mídia (filme/série) e gênero, além de ordenação por nota.
 - **Detalhe de avaliação** — página completa com todas as informações da mídia e da avaliação.
 - **Edição e exclusão de avaliação** — disponíveis apenas para o autor da avaliação, tanto na lista quanto na página de detalhe.
