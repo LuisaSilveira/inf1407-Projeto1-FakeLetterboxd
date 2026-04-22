@@ -56,8 +56,6 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Acesse em: [http://127.0.0.1:8000](http://127.0.0.1:8000)
-
 ---
 
 ## Manual do usuário
